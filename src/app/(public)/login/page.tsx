@@ -8,7 +8,7 @@ import { Skeleton } from '@/shared/ui';
 
 export const metadata: Metadata = {
   title: '로그인',
-  description: 'UIROAD에 로그인하고 교환학생 준비를 이어가세요.',
+  description: 'UNIROAD에 로그인하고 교환학생 준비를 이어가세요.',
 };
 
 export default function LoginPage() {

@@ -5,7 +5,7 @@ export function LandingHeader() {
     <header className="sticky top-0 z-30 border-b border-ink-100 bg-surface/90 backdrop-blur">
       <div className="mx-auto flex h-16 max-w-[1200px] items-center justify-between px-6">
         <Link href="/" className="text-h2 font-bold tracking-tight text-brand-600">
-          UIROAD
+          UNIROAD
         </Link>
 
         <nav className="flex items-center gap-2">

@@ -1,6 +1,6 @@
 import { ShieldCheck } from 'lucide-react';
 
-const COLUMNS = ['블로그', '오픈카톡', 'UIROAD'];
+const COLUMNS = ['블로그', '오픈카톡', 'UNIROAD'];
 
 const ROWS: { label: string; values: string[] }[] = [
   { label: '정보 최신성', values: ['✕', '△', '○'] },
@@ -21,11 +21,11 @@ export function WhyUniroad() {
   return (
     <>
       <section className="mx-auto max-w-[1200px] px-6 py-20">
-        <h2 className="text-h1 text-ink-900">왜 UIROAD인가</h2>
+        <h2 className="text-h1 text-ink-900">왜 UNIROAD인가</h2>
 
         <div className="mt-8 overflow-x-auto">
           <table className="w-full min-w-[480px] border-collapse text-body">
-            <caption className="sr-only">정보를 찾던 기존 방법과 UIROAD 비교</caption>
+            <caption className="sr-only">정보를 찾던 기존 방법과 UNIROAD 비교</caption>
             <thead>
               <tr className="border-b border-ink-300">
                 <th scope="col" className="px-4 py-3 text-left font-medium text-ink-500">
@@ -36,7 +36,7 @@ export function WhyUniroad() {
                     key={column}
                     scope="col"
                     className={`px-4 py-3 text-center font-medium ${
-                      column === 'UIROAD' ? 'text-brand-700' : 'text-ink-500'
+                      column === 'UNIROAD' ? 'text-brand-700' : 'text-ink-500'
                     }`}
                   >
                     {column}

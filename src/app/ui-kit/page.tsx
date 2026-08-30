@@ -68,7 +68,7 @@ export default function UiKitPage() {
     <main className="mx-auto flex max-w-5xl flex-col gap-10 px-6 py-12">
       <header className="flex flex-col gap-1">
         <p className="text-caption font-medium text-brand-600">개발 확인용 · 배포 전 삭제</p>
-        <h1 className="text-display">UIROAD 공통 컴포넌트</h1>
+        <h1 className="text-display">UNIROAD 공통 컴포넌트</h1>
       </header>
 
       <Section title="API 프록시 확인" description="GET /api/notices — 인증 없이 열리는 엔드포인트">

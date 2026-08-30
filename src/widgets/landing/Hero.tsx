@@ -33,7 +33,7 @@ export function Hero() {
             탭 20개 띄워놓고 하지 마세요
           </h1>
           <p className="mt-5 text-lg text-ink-500">
-            파견 준비부터 현지 생활까지 UIROAD 하나로.
+            파견 준비부터 현지 생활까지 UNIROAD 하나로.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">

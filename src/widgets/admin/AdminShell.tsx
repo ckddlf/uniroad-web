@@ -23,7 +23,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
     <div className="flex min-h-dvh bg-canvas">
       <aside className="hidden w-56 shrink-0 flex-col bg-ink-900 p-4 md:flex">
         <Link href="/home" className="mb-6 px-2 text-h2 font-bold tracking-tight text-white">
-          UIROAD
+          UNIROAD
           <span className="ml-2 text-caption font-normal text-ink-300">운영</span>
         </Link>
 

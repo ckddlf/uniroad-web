@@ -1,6 +1,6 @@
-# UIROAD Web
+# UNIROAD Web
 
-교환학생 커뮤니티 UIROAD의 웹 프론트엔드. Next.js 15 App Router + React 19 + TypeScript.
+교환학생 커뮤니티 UNIROAD의 웹 프론트엔드. Next.js 15 App Router + React 19 + TypeScript.
 
 ## 실행
 

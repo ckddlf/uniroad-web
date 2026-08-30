@@ -45,7 +45,7 @@ export function GlobalNav() {
     <header className="sticky top-0 z-30 h-16 border-b border-ink-100 bg-surface">
       <div className="mx-auto flex h-full max-w-[1200px] items-center gap-6 px-6">
         <Link href="/home" className="text-h2 font-bold tracking-tight text-brand-600">
-          UIROAD
+          UNIROAD
         </Link>
 
         <nav aria-label="주요 메뉴" className="hidden items-center gap-1 md:flex">

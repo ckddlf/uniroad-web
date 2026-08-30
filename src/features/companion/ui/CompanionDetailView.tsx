@@ -252,7 +252,7 @@ export function CompanionDetailView({ postId }: { postId: number }) {
         }
       >
         <p className="text-body text-ink-700">
-          UIROAD는 외부 채팅에서 발생한 문제에 책임지지 않습니다.
+          UNIROAD는 외부 채팅에서 발생한 문제에 책임지지 않습니다.
         </p>
         <p className="mt-2 text-body text-danger">선입금·송금을 요구하면 즉시 신고해주세요.</p>
       </Modal>

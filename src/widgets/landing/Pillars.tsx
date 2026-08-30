@@ -74,7 +74,7 @@ export function Pillars() {
   return (
     <>
       <section className="mx-auto max-w-[1200px] px-6 py-20">
-        <h2 className="text-h1 text-ink-900">UIROAD가 하는 일</h2>
+        <h2 className="text-h1 text-ink-900">UNIROAD가 하는 일</h2>
 
         <div className="mt-8 grid gap-4 sm:grid-cols-3">
           {PILLARS.map((pillar) => (

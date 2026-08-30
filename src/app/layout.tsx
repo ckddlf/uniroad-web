@@ -5,19 +5,19 @@ import './globals.css';
 
 export const metadata: Metadata = {
   title: {
-    default: 'UIROAD — 교환학생 준비부터 현지 생활까지',
-    template: '%s | UIROAD',
+    default: 'UNIROAD — 교환학생 준비부터 현지 생활까지',
+    template: '%s | UNIROAD',
   },
   description:
-    '파견 준비 일정, 제출 서류 체크리스트, 현지 중고거래와 동행 구하기까지. 교환학생에게 필요한 것만 모은 커뮤니티 UIROAD.',
-  applicationName: 'UIROAD',
+    '파견 준비 일정, 제출 서류 체크리스트, 현지 중고거래와 동행 구하기까지. 교환학생에게 필요한 것만 모은 커뮤니티 UNIROAD.',
+  applicationName: 'UNIROAD',
   openGraph: {
     type: 'website',
-    siteName: 'UIROAD',
+    siteName: 'UNIROAD',
     locale: 'ko_KR',
-    title: 'UIROAD — 교환학생 준비부터 현지 생활까지',
+    title: 'UNIROAD — 교환학생 준비부터 현지 생활까지',
     description:
-      '파견 준비 일정, 제출 서류 체크리스트, 현지 중고거래와 동행 구하기까지 UIROAD 하나로.',
+      '파견 준비 일정, 제출 서류 체크리스트, 현지 중고거래와 동행 구하기까지 UNIROAD 하나로.',
   },
 };
 

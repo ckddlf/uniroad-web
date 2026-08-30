@@ -14,7 +14,7 @@ export function AuthShell({ title, description, progress, children }: AuthShellP
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col justify-center px-6 py-12">
       <Link href="/" className="mb-8 self-start text-h2 font-bold tracking-tight text-brand-600">
-        UIROAD
+        UNIROAD
       </Link>
 
       {progress}

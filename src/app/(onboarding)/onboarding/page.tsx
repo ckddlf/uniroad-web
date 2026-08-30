@@ -10,7 +10,7 @@ export default function OnboardingPage() {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-xl flex-col justify-center px-6 py-12">
       <Link href="/" className="mb-8 self-start text-h2 font-bold tracking-tight text-brand-600">
-        UIROAD
+        UNIROAD
       </Link>
 
       <OnboardingForm />

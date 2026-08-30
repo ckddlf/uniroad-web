@@ -6,7 +6,7 @@ import { LandingHeader } from '@/widgets/landing/LandingHeader';
 
 export const metadata: Metadata = {
   title: '이용약관 · 개인정보처리방침',
-  description: 'UIROAD 이용약관과 개인정보 처리방침입니다.',
+  description: 'UNIROAD 이용약관과 개인정보 처리방침입니다.',
 };
 
 export default function TermsPage() {
