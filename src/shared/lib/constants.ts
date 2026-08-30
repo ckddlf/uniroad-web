@@ -187,8 +187,13 @@ export const EUROPEAN_COUNTRIES = [
   '헝가리',
 ] as const;
 
-/** 온보딩 나이 선택지 */
-export const AGE_OPTIONS = Array.from({ length: 23 }, (_, index) => String(18 + index));
+/**
+ * 온보딩 출생 연도 선택지 (최근 연도부터).
+ * 만 18~40세에 해당하는 범위이고, 벗어나는 경우 "직접 입력"으로 적는다.
+ */
+export const BIRTH_YEAR_OPTIONS = Array.from({ length: 23 }, (_, index) =>
+  String(new Date().getFullYear() - 18 - index),
+);
 
 /** 커서 페이징 기본 크기 */
 export const DEFAULT_PAGE_SIZE = 10;

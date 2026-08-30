@@ -13,7 +13,7 @@ export const onboardingSchema = z.object({
   gender: z
     .string()
     .refine((value): value is Gender => value === 'MALE' || value === 'FEMALE', '성별을 선택해주세요.'),
-  age: z.string(),
+  birthYear: z.string(),
 
   // 2단계
   currentSituation: z
@@ -51,7 +51,7 @@ export type OnboardingFormValues = z.input<typeof onboardingSchema>;
 export const ONBOARDING_DEFAULTS: OnboardingFormValues = {
   nickname: '',
   gender: '',
-  age: '',
+  birthYear: '',
   currentSituation: '',
   domesticUniversity: '',
   dispatchUndecided: false,
@@ -68,7 +68,7 @@ export const ONBOARDING_DEFAULTS: OnboardingFormValues = {
 
 /** 단계별로 검증할 필드 */
 export const ONBOARDING_STEP_FIELDS = {
-  1: ['nickname', 'gender', 'age'],
+  1: ['nickname', 'gender', 'birthYear'],
   2: ['currentSituation'],
   3: [
     'domesticUniversity',
@@ -103,7 +103,7 @@ export function toOnboardingRequest(values: OnboardingFormValues): OnboardingReq
     gender: values.gender as Gender,
     currentSituation: situation,
     domesticUniversity: values.domesticUniversity.trim(),
-    age: toNumber(values.age),
+    birthYear: toNumber(values.birthYear),
     dispatchedUniversity: undecided ? undefined : trimmed(values.dispatchedUniversity),
     dispatchedCountry: undecided ? undefined : trimmed(values.dispatchedCountry),
     dispatchedRegion: undecided ? undefined : trimmed(values.dispatchedRegion),

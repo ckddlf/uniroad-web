@@ -126,7 +126,7 @@ export interface OnboardingRequest {
   gender: Gender;
   currentSituation: CurrentSituation;
   domesticUniversity: string;
-  age?: number;
+  birthYear?: number;
   dispatchedUniversity?: string;
   dispatchedCountry?: string;
   dispatchedRegion?: string;
@@ -147,7 +147,7 @@ export interface MemberResponseDto {
   nickname: string | null;
   gender: Gender | null;
   currentSituation: CurrentSituation | null;
-  age: number | null;
+  birthYear: number | null;
   domesticUniversityId: number | null;
   domesticUniversity: string | null;
   homeUniversity: string | null;

@@ -2,10 +2,12 @@
 
 import { useFormContext } from 'react-hook-form';
 
-import { AGE_OPTIONS, GENDER } from '@/shared/lib/constants';
+import { BIRTH_YEAR_OPTIONS, GENDER } from '@/shared/lib/constants';
 import { Input, Radio, RadioGroup, SelectOrCustom } from '@/shared/ui';
 
 import type { OnboardingFormValues } from '../../model/onboardingSchema';
+
+const CURRENT_YEAR = new Date().getFullYear();
 
 export function ProfileStep() {
   const {
@@ -32,17 +34,19 @@ export function ProfileStep() {
       </RadioGroup>
 
       <SelectOrCustom
-        label="나이"
+        label="출생 연도"
         placeholder="선택 입력"
-        options={AGE_OPTIONS.map((age) => ({ value: age, label: `${age}세` }))}
-        customPlaceholder="나이를 입력해주세요"
+        options={BIRTH_YEAR_OPTIONS.map((year) => ({ value: year, label: `${year}년` }))}
+        customPlaceholder="예: 2003"
         inputType="number"
         inputMode="numeric"
-        min={1}
-        max={120}
-        error={errors.age?.message}
-        value={watch('age')}
-        onChange={(value) => setValue('age', value, { shouldDirty: true, shouldValidate: true })}
+        min={1900}
+        max={CURRENT_YEAR}
+        error={errors.birthYear?.message}
+        value={watch('birthYear')}
+        onChange={(value) =>
+          setValue('birthYear', value, { shouldDirty: true, shouldValidate: true })
+        }
       />
     </div>
   );
