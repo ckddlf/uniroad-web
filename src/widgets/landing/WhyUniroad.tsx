@@ -6,7 +6,7 @@ const ROWS: { label: string; values: string[] }[] = [
   { label: '정보 최신성', values: ['✕', '△', '○'] },
   { label: '기록이 남음', values: ['○', '✕', '○'] },
   { label: '현지 거래', values: ['✕', '○', '○'] },
-  { label: '신원 확인', values: ['✕', '✕', '○ 인증'] },
+  { label: '신원 확인', values: ['✕', '✕', '○'] },
   { label: '준비 일정 관리', values: ['✕', '✕', '○'] },
 ];
 
