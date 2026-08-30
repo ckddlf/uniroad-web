@@ -1,0 +1,114 @@
+@import 'tailwindcss';
+
+/* ────────────────────────────────────────────────
+   UIROAD 디자인 토큰
+   ──────────────────────────────────────────────── */
+@theme {
+  /* 브랜드 */
+  --color-brand-50: #eef7f2;
+  --color-brand-100: #d3ebde;
+  --color-brand-500: #17976b;
+  --color-brand-600: #127956;
+  --color-brand-700: #0d5c42;
+
+  /* 잉크(텍스트·라인) */
+  --color-ink-900: #16181a;
+  --color-ink-700: #3a4046;
+  --color-ink-500: #6b7280;
+  --color-ink-300: #c9cfd6;
+  --color-ink-100: #eef1f4;
+
+  /* 면 */
+  --color-surface: #ffffff;
+  --color-canvas: #f7f9fa;
+
+  /* 상태 */
+  --color-danger: #d93a3a;
+  --color-danger-bg: #fdf0f0;
+  --color-warning: #e08a00;
+  --color-warning-bg: #fdf6e9;
+  --color-info: #2b6cb0;
+  --color-info-bg: #eef4fb;
+  --color-success: #17976b;
+  --color-success-bg: #eef7f2;
+
+  /* 타이포 */
+  --font-sans:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto,
+    'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+
+  --text-display: 2rem; /* 32 / 40 */
+  --text-display--line-height: 2.5rem;
+  --text-display--font-weight: 700;
+
+  --text-h1: 1.5rem; /* 24 / 32 */
+  --text-h1--line-height: 2rem;
+  --text-h1--font-weight: 700;
+
+  --text-h2: 1.25rem; /* 20 / 28 */
+  --text-h2--line-height: 1.75rem;
+  --text-h2--font-weight: 600;
+
+  --text-body: 0.9375rem; /* 15 / 24 */
+  --text-body--line-height: 1.5rem;
+
+  --text-caption: 0.8125rem; /* 13 / 18 */
+  --text-caption--line-height: 1.125rem;
+
+  --text-label: 0.8125rem; /* 13 / 18 */
+  --text-label--line-height: 1.125rem;
+  --text-label--font-weight: 500;
+
+  /* 반경 */
+  --radius-sm: 0.375rem; /* 6 */
+  --radius-md: 0.625rem; /* 10 */
+  --radius-lg: 0.875rem; /* 14 */
+
+  /* 그림자 */
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 0.04), 0 4px 12px rgb(0 0 0 / 0.05);
+  --shadow-pop: 0 4px 6px rgb(0 0 0 / 0.04), 0 12px 28px rgb(0 0 0 / 0.12);
+
+  /* 레이아웃 */
+  --spacing-gnb: 4rem; /* GNB 64px */
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-ink-900);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* 마우스 클릭에는 링을 띄우지 않고 키보드 포커스에만 노출 */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-brand-100);
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-ink-300) transparent;
+  }
+
+  /* 목록 카드 본문 말줄임 */
+  .line-clamp-2-safe {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
