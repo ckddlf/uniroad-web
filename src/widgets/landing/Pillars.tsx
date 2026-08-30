@@ -33,9 +33,9 @@ const FEATURES: { title: string; description: string; mock: ReactNode }[] = [
     ),
   },
   {
-    title: '귀국하는 선배의 살림을 통째로',
+    title: '출국 전 정착 물품을 빠르고 안전하게',
     description:
-      '냄비 하나씩 흩어져 올라오는 대신, 주방·욕실·침구처럼 카테고리로 묶어 넘깁니다. 같은 도시에 있는 사람의 글인지 목록에서 바로 보입니다.',
+      '인증된 교환학생끼리 초기 정착물품을 일괄 거래하고, 국가별로 모인 거래글에서 내 파견지에 필요한 물픔을 빠르게 탐색할 수 있습니다.',
     mock: (
       <MockPanel title="자취 살림 통째로 €80">
         <MockRow label="🍳 주방 · 냄비 2, 프라이팬 1" />
