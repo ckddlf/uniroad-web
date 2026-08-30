@@ -2,14 +2,16 @@
 
 import { useFormContext } from 'react-hook-form';
 
-import { GENDER } from '@/shared/lib/constants';
-import { Input, Radio, RadioGroup } from '@/shared/ui';
+import { AGE_OPTIONS, GENDER } from '@/shared/lib/constants';
+import { Input, Radio, RadioGroup, SelectOrCustom } from '@/shared/ui';
 
 import type { OnboardingFormValues } from '../../model/onboardingSchema';
 
 export function ProfileStep() {
   const {
     register,
+    watch,
+    setValue,
     formState: { errors },
   } = useFormContext<OnboardingFormValues>();
 
@@ -29,15 +31,18 @@ export function ProfileStep() {
         <Radio value="FEMALE" label={GENDER.FEMALE} {...register('gender')} />
       </RadioGroup>
 
-      <Input
+      <SelectOrCustom
         label="나이"
-        type="number"
+        placeholder="선택 입력"
+        options={AGE_OPTIONS.map((age) => ({ value: age, label: `${age}세` }))}
+        customPlaceholder="나이를 입력해주세요"
+        inputType="number"
         inputMode="numeric"
         min={1}
         max={120}
-        placeholder="선택 입력"
         error={errors.age?.message}
-        {...register('age')}
+        value={watch('age')}
+        onChange={(value) => setValue('age', value, { shouldDirty: true, shouldValidate: true })}
       />
     </div>
   );

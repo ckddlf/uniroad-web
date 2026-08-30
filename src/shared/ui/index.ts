@@ -18,6 +18,7 @@ export { Pagination } from './Pagination';
 export { ProgressBar } from './ProgressBar';
 export { Radio, RadioGroup } from './Radio';
 export { Select, type SelectOption } from './Select';
+export { SelectOrCustom } from './SelectOrCustom';
 export { Skeleton, SkeletonCard, SkeletonText } from './Skeleton';
 export { Tabs, type TabItem } from './Tabs';
 export { Textarea } from './Textarea';

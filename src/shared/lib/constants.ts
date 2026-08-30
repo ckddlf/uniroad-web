@@ -148,6 +148,48 @@ export const NOTIFICATION_TYPE: Record<NotificationType, string> = {
 /** 파견 학기 — 서버는 자유 문자열을 받지만 입력은 목록으로 고정한다 */
 export const DISPATCH_SEMESTERS = ['1학기', '2학기', '여름학기', '겨울학기'] as const;
 
+/**
+ * 파견 국가 선택지로 쓰는 유럽 국가 목록 (가나다순).
+ * 서버의 국가 목록(`/api/countries`)이 비어 있을 때 이 목록을 쓴다.
+ * 여기에 없는 나라는 "직접 입력"으로 적을 수 있다.
+ */
+export const EUROPEAN_COUNTRIES = [
+  '그리스',
+  '네덜란드',
+  '노르웨이',
+  '덴마크',
+  '독일',
+  '라트비아',
+  '루마니아',
+  '룩셈부르크',
+  '리투아니아',
+  '몰타',
+  '벨기에',
+  '불가리아',
+  '스웨덴',
+  '스위스',
+  '스페인',
+  '슬로바키아',
+  '슬로베니아',
+  '아이슬란드',
+  '아일랜드',
+  '에스토니아',
+  '영국',
+  '오스트리아',
+  '이탈리아',
+  '체코',
+  '크로아티아',
+  '키프로스',
+  '포르투갈',
+  '폴란드',
+  '프랑스',
+  '핀란드',
+  '헝가리',
+] as const;
+
+/** 온보딩 나이 선택지 */
+export const AGE_OPTIONS = Array.from({ length: 23 }, (_, index) => String(18 + index));
+
 /** 커서 페이징 기본 크기 */
 export const DEFAULT_PAGE_SIZE = 10;
 

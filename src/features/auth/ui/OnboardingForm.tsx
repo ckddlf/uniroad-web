@@ -100,6 +100,8 @@ export function OnboardingForm() {
               type="button"
               variant="secondary"
               size="lg"
+              // 다음 버튼이 w-full이라 flex가 이 버튼을 글자 폭 아래로 눌러 세로로 접히던 것을 막는다
+              className="shrink-0"
               onClick={() => setStep((current) => (current - 1) as Step)}
             >
               이전
