@@ -17,12 +17,20 @@ interface AuthState {
   status: MemberStatus | null;
   role: Role | null;
   member: MemberResponseDto | null;
+  /**
+   * 사용자가 직접 누른 로그아웃이 진행 중인지.
+   * 세션이 비는 순간 AuthGuard가 /login으로 되돌리는 것을 막는 표시다.
+   */
+  loggingOut: boolean;
 
   setTokens: (token: TokenResponse, remember?: boolean) => void;
   /** 재발급 결과처럼 저장소 정책을 유지한 채 토큰만 교체할 때 사용 */
   refreshTokens: (token: TokenResponse) => void;
   setMember: (member: MemberResponseDto) => void;
   setPhase: (phase: AuthPhase) => void;
+  /** 로그아웃 시작을 알린다. AuthGuard가 한 번 소비하고 되돌린다. */
+  beginLogout: () => void;
+  endLogout: () => void;
   clear: () => void;
 }
 
@@ -32,10 +40,16 @@ export const useAuthStore = create<AuthState>((set) => ({
   status: null,
   role: null,
   member: null,
+  loggingOut: false,
 
   setTokens: (token, remember = false) => {
     saveRefreshToken(token.refreshToken, remember);
-    set({ accessToken: token.accessToken, status: token.status, role: token.role });
+    set({
+      accessToken: token.accessToken,
+      status: token.status,
+      role: token.role,
+      loggingOut: false,
+    });
   },
 
   refreshTokens: (token) => {
@@ -48,6 +62,11 @@ export const useAuthStore = create<AuthState>((set) => ({
 
   setPhase: (phase) => set({ phase }),
 
+  beginLogout: () => set({ loggingOut: true }),
+  endLogout: () => set({ loggingOut: false }),
+
+  // loggingOut은 여기서 건드리지 않는다 — clear() 뒤에도 표시가 살아 있어야
+  // AuthGuard가 그것을 보고 /login 리다이렉트를 건너뛴다.
   clear: () => {
     clearRefreshToken();
     set({ accessToken: null, status: null, role: null, member: null });

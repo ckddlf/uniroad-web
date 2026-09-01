@@ -81,9 +81,14 @@ export function useRefreshMember() {
 export function useLogout() {
   const router = useRouter();
   const clear = useAuthStore((state) => state.clear);
+  const beginLogout = useAuthStore((state) => state.beginLogout);
   const queryClient = useQueryClient();
 
   return useCallback(async () => {
+    // 세션을 비우기 전에 표시해둔다. 그러지 않으면 (app) 레이아웃의 AuthGuard가
+    // 토큰이 사라진 것을 먼저 보고 /login으로 튕겨 홈 이동을 덮어쓴다.
+    beginLogout();
+
     try {
       await authApi.logout();
     } catch {
@@ -93,5 +98,5 @@ export function useLogout() {
     clear();
     queryClient.clear();
     router.replace('/');
-  }, [clear, queryClient, router]);
+  }, [beginLogout, clear, queryClient, router]);
 }

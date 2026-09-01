@@ -73,9 +73,6 @@ export function GlobalNav() {
             ))}
           </Dropdown>
 
-          <Link href="/schedule" className={linkClass(isActive('/schedule'))}>
-            스케줄
-          </Link>
           <Link href="/chat" className={linkClass(isActive('/chat'))}>
             채팅
           </Link>

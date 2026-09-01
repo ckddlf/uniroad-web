@@ -11,24 +11,24 @@ import { HomeGreeting } from './HomeGreeting';
 import { MarketWidget } from './MarketWidget';
 import { NoticeWidget } from './NoticeWidget';
 import { PopularPostsWidget } from './PopularPostsWidget';
-import { ScheduleWidget } from './ScheduleWidget';
 
-type WidgetKey = 'schedule' | 'popular' | 'market' | 'companion' | 'account' | 'notice';
+// 준비 일정은 노출을 잠시 내렸다. ScheduleWidget은 그대로 두었으니
+// 다시 켤 때 import와 아래 목록에 'schedule'만 되돌리면 된다.
+type WidgetKey = 'popular' | 'market' | 'companion' | 'account' | 'notice';
 
 /**
  * 같은 홈이지만 상황에 따라 순서를 바꾼다.
- * 지원 준비 중에는 일정이, 파견 중에는 생활비와 거래가 먼저 필요하다.
+ * 지원 준비 중에는 커뮤니티와 동행이, 파견 중에는 생활비와 거래가 먼저 필요하다.
  */
 const ORDER: Record<CurrentSituation, WidgetKey[]> = {
-  PREPARING_APPLICATION: ['schedule', 'popular', 'companion', 'market', 'account', 'notice'],
-  PREPARING_DEPARTURE: ['schedule', 'companion', 'market', 'popular', 'account', 'notice'],
-  DISPATCHED: ['account', 'market', 'companion', 'popular', 'schedule', 'notice'],
+  PREPARING_APPLICATION: ['popular', 'companion', 'market', 'account', 'notice'],
+  PREPARING_DEPARTURE: ['companion', 'market', 'popular', 'account', 'notice'],
+  DISPATCHED: ['account', 'market', 'companion', 'popular', 'notice'],
 };
 
-const DEFAULT_ORDER: WidgetKey[] = ['schedule', 'popular', 'market', 'companion', 'account', 'notice'];
+const DEFAULT_ORDER: WidgetKey[] = ['popular', 'market', 'companion', 'account', 'notice'];
 
 const WIDGETS: Record<WidgetKey, ReactNode> = {
-  schedule: <ScheduleWidget />,
   popular: <PopularPostsWidget />,
   market: <MarketWidget />,
   companion: <CompanionWidget />,

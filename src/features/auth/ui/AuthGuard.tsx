@@ -31,6 +31,8 @@ export function AuthGuard({ require, role, children }: AuthGuardProps) {
   const status = useAuthStore((state) => state.status);
   const currentRole = useAuthStore((state) => state.role);
   const clear = useAuthStore((state) => state.clear);
+  const loggingOut = useAuthStore((state) => state.loggingOut);
+  const endLogout = useAuthStore((state) => state.endLogout);
 
   const authenticated = accessToken !== null;
   const statusOk = status === require;
@@ -40,6 +42,13 @@ export function AuthGuard({ require, role, children }: AuthGuardProps) {
   useEffect(() => {
     // 세션 복원이 끝나기 전에는 어떤 판단도 하지 않는다
     if (phase !== 'ready' || allowed) return;
+
+    // 사용자가 직접 로그아웃한 경우엔 여기서 잡지 않는다.
+    // useLogout이 홈으로 보내는 중이므로 표시만 지우고 비켜준다.
+    if (loggingOut) {
+      endLogout();
+      return;
+    }
 
     if (!authenticated) {
       const redirect = pathname ? `?redirectTo=${encodeURIComponent(pathname)}` : '';
@@ -67,7 +76,19 @@ export function AuthGuard({ require, role, children }: AuthGuardProps) {
     }
 
     router.replace('/home');
-  }, [allowed, authenticated, clear, pathname, phase, roleOk, router, status, toast]);
+  }, [
+    allowed,
+    authenticated,
+    clear,
+    endLogout,
+    loggingOut,
+    pathname,
+    phase,
+    roleOk,
+    router,
+    status,
+    toast,
+  ]);
 
   if (phase !== 'ready' || !allowed) return <SessionGate />;
 
