@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { DISPATCH_SEMESTERS, EUROPEAN_COUNTRIES } from '@/shared/lib/constants';
-import { useCountries } from '@/features/country/api';
+import { DISPATCH_SEMESTERS } from '@/shared/lib/constants';
+import { useCountryOptions } from '@/features/country/api';
 import { Checkbox, Input, Select, SelectOrCustom } from '@/shared/ui';
 
 import type { OnboardingFormValues } from '../../model/onboardingSchema';
@@ -23,22 +23,8 @@ export function SchoolStep() {
     formState: { errors },
   } = useFormContext<OnboardingFormValues>();
 
-  const countries = useCountries();
+  const countries = useCountryOptions();
   const undecided = watch('dispatchUndecided');
-
-  // 서버 국가 목록이 비어 있거나 실패하면 유럽 국가 목록으로 채운다.
-  // 어느 쪽이든 목록에 없는 나라는 "직접 입력"으로 적을 수 있다.
-  const usingFallback = (countries.data?.length ?? 0) === 0;
-  const countryOptions = useMemo(() => {
-    const names = countries.data?.length
-      ? countries.data.map((country) => country.name)
-      : [...EUROPEAN_COUNTRIES];
-    return names.map((name) => ({ value: name, label: name }));
-  }, [countries.data]);
-  const countryHint =
-    usingFallback && !countries.isPending
-      ? '목록에 없는 나라는 "직접 입력"을 골라 적어주세요.'
-      : undefined;
 
   // 파견교 미정으로 바꾸면 이미 입력한 파견 정보를 비운다
   useEffect(() => {
@@ -71,9 +57,9 @@ export function SchoolStep() {
         <SelectOrCustom
           label="파견 국가"
           placeholder={countries.isPending ? '불러오는 중…' : '선택해주세요'}
-          options={countryOptions}
+          options={countries.options}
           customPlaceholder="예: 프랑스"
-          hint={countryHint}
+          hint={countries.fallbackHint}
           disabled={undecided}
           error={errors.dispatchedCountry?.message}
           value={watch('dispatchedCountry')}

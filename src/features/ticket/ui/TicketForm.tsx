@@ -5,14 +5,22 @@ import { useRouter } from 'next/navigation';
 import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useCountries } from '@/features/country/api';
+import { useCountryOptions } from '@/features/country/api';
 import { TICKET_TYPE_EMOJI, TICKET_TYPE_FIELDS } from '@/entities/ticket/ticketType';
 import { toErrorMessage } from '@/shared/api/errors';
 import type { TicketTransferResponseDto, TicketType } from '@/shared/api/types';
 import { TICKET_TYPE, TICKET_TYPE_ORDER } from '@/shared/lib/constants';
 import { discountRate, formatNumber } from '@/shared/lib/format';
 import { applyServerFieldErrors } from '@/shared/lib/form';
-import { Button, Input, Select, SelectableCard, StepProgress, Textarea, useToast } from '@/shared/ui';
+import {
+  Button,
+  Input,
+  SelectableCard,
+  SelectOrCustom,
+  StepProgress,
+  Textarea,
+  useToast,
+} from '@/shared/ui';
 
 import { useCreateTicket, useUpdateTicket } from '../api';
 import {
@@ -73,7 +81,7 @@ function toDefaults(initial?: TicketTransferResponseDto): TicketFormValues {
 export function TicketForm({ ticketId, initial }: TicketFormProps) {
   const router = useRouter();
   const toast = useToast();
-  const countries = useCountries();
+  const countries = useCountryOptions();
   const isEdit = ticketId !== undefined;
 
   const createTicket = useCreateTicket();
@@ -92,6 +100,7 @@ export function TicketForm({ ticketId, initial }: TicketFormProps) {
     register,
     handleSubmit,
     watch,
+    setValue,
     trigger,
     setError,
     formState: { errors, isSubmitting },
@@ -223,16 +232,17 @@ export function TicketForm({ ticketId, initial }: TicketFormProps) {
               </p>
             )}
 
-            <Select
+            <SelectOrCustom
               label="국가"
               placeholder={countries.isPending ? '불러오는 중…' : '선택해주세요'}
-              disabled={countries.isPending || countries.isError}
-              options={(countries.data ?? []).map((country) => ({
-                value: country.name,
-                label: country.name,
-              }))}
+              options={countries.options}
+              customPlaceholder="예: 프랑스"
+              hint={countries.fallbackHint}
               error={errors.country?.message}
-              {...register('country')}
+              value={watch('country')}
+              onChange={(value) =>
+                setValue('country', value, { shouldDirty: true, shouldValidate: true })
+              }
             />
 
             <Textarea

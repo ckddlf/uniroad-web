@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useCountries } from '@/features/country/api';
+import { useCountryOptions } from '@/features/country/api';
 import { useUpdateProfile } from '@/features/member/api';
 import { toErrorMessage } from '@/shared/api/errors';
 import type { CurrentSituation, MemberProfileUpdateRequest } from '@/shared/api/types';
@@ -15,7 +15,16 @@ import {
 } from '@/shared/lib/constants';
 import { applyServerFieldErrors } from '@/shared/lib/form';
 import { useAuthStore } from '@/shared/store/authStore';
-import { Button, DatePicker, Input, Select, SelectableCard, Skeleton, useToast } from '@/shared/ui';
+import {
+  Button,
+  DatePicker,
+  Input,
+  Select,
+  SelectableCard,
+  SelectOrCustom,
+  Skeleton,
+  useToast,
+} from '@/shared/ui';
 
 import { profileSchema, toProfileRequest, type ProfileFormValues } from '../model/profileSchema';
 
@@ -34,7 +43,7 @@ const SITUATIONS: CurrentSituation[] = [
 export function ProfileEditForm() {
   const toast = useToast();
   const member = useAuthStore((state) => state.member);
-  const countries = useCountries();
+  const countries = useCountryOptions();
   const updateProfile = useUpdateProfile();
 
   const {
@@ -42,6 +51,7 @@ export function ProfileEditForm() {
     handleSubmit,
     reset,
     watch,
+    setValue,
     setError,
     formState: { errors, isSubmitting },
   } = useForm<ProfileFormValues>({
@@ -136,26 +146,18 @@ export function ProfileEditForm() {
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        {countries.isError ? (
-          <Input
-            label="파견 국가"
-            hint="국가 목록을 불러오지 못해 직접 입력으로 전환했어요."
-            error={errors.dispatchedCountry?.message}
-            {...register('dispatchedCountry')}
-          />
-        ) : (
-          <Select
-            label="파견 국가"
-            placeholder={countries.isPending ? '불러오는 중…' : '선택해주세요'}
-            disabled={countries.isPending}
-            options={(countries.data ?? []).map((country) => ({
-              value: country.name,
-              label: country.name,
-            }))}
-            error={errors.dispatchedCountry?.message}
-            {...register('dispatchedCountry')}
-          />
-        )}
+        <SelectOrCustom
+          label="파견 국가"
+          placeholder={countries.isPending ? '불러오는 중…' : '선택해주세요'}
+          options={countries.options}
+          customPlaceholder="예: 프랑스"
+          hint={countries.fallbackHint}
+          error={errors.dispatchedCountry?.message}
+          value={watch('dispatchedCountry')}
+          onChange={(value) =>
+            setValue('dispatchedCountry', value, { shouldDirty: true, shouldValidate: true })
+          }
+        />
 
         <Input
           label="파견 대학"

@@ -7,7 +7,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Trash2 } from 'lucide-react';
 
-import { useCountries } from '@/features/country/api';
+import { useCountryOptions } from '@/features/country/api';
 import { toErrorMessage } from '@/shared/api/errors';
 import type { TradeCategory, UsedItemResponseDto } from '@/shared/api/types';
 import { useS3Upload } from '@/shared/hooks/useS3Upload';
@@ -19,6 +19,7 @@ import {
   Input,
   ProgressBar,
   Select,
+  SelectOrCustom,
   Textarea,
   useToast,
 } from '@/shared/ui';
@@ -60,7 +61,7 @@ function toDefaults(initial?: UsedItemResponseDto): UsedItemFormValues {
 export function UsedItemForm({ itemId, initial }: UsedItemFormProps) {
   const router = useRouter();
   const toast = useToast();
-  const countries = useCountries();
+  const countries = useCountryOptions();
   const isEdit = itemId !== undefined;
 
   const createItem = useCreateUsedItem();
@@ -85,6 +86,8 @@ export function UsedItemForm({ itemId, initial }: UsedItemFormProps) {
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
     setError,
     formState: { errors, isSubmitting },
   } = form;
@@ -171,17 +174,18 @@ export function UsedItemForm({ itemId, initial }: UsedItemFormProps) {
               {...register('semester')}
             />
 
-            <Select
+            <SelectOrCustom
               label="국가"
               required
               placeholder={countries.isPending ? '불러오는 중…' : '선택해주세요'}
-              disabled={countries.isPending || countries.isError}
-              options={(countries.data ?? []).map((country) => ({
-                value: country.name,
-                label: country.name,
-              }))}
+              options={countries.options}
+              customPlaceholder="예: 프랑스"
+              hint={countries.fallbackHint}
               error={errors.country?.message}
-              {...register('country')}
+              value={watch('country')}
+              onChange={(value) =>
+                setValue('country', value, { shouldDirty: true, shouldValidate: true })
+              }
             />
 
             <Input

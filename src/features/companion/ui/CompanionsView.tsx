@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { UserPlus } from 'lucide-react';
 
-import { useCountries } from '@/features/country/api';
+import { useCountryOptions } from '@/features/country/api';
 import type { CompanionStatus } from '@/shared/api/types';
 import { COMPANION_STATUS } from '@/shared/lib/constants';
 
@@ -39,7 +39,7 @@ export function CompanionsView() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const countries = useCountries();
+  const countries = useCountryOptions();
 
   const statusParam = searchParams.get('status');
   const status = isStatus(statusParam) ? statusParam : undefined;
@@ -117,11 +117,8 @@ export function CompanionsView() {
           <Select
             aria-label="국가"
             placeholder="전체 국가"
-            disabled={countries.isPending || countries.isError}
-            options={(countries.data ?? []).map((item) => ({
-              value: item.name,
-              label: item.name,
-            }))}
+            disabled={countries.isPending}
+            options={countries.options}
             value={country}
             onChange={(event) => updateQuery({ country: event.target.value })}
           />

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { PackagePlus, Search } from 'lucide-react';
 
-import { useCountries } from '@/features/country/api';
+import { useCountryOptions } from '@/features/country/api';
 import type { UsedItemStatus } from '@/shared/api/types';
 import { USED_ITEM_STATUS } from '@/shared/lib/constants';
 import {
@@ -32,7 +32,7 @@ export function MarketView() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const countries = useCountries();
+  const countries = useCountryOptions();
 
   const country = searchParams.get('country') ?? '';
   const region = searchParams.get('region') ?? '';
@@ -97,8 +97,8 @@ export function MarketView() {
           <Select
             aria-label="국가"
             placeholder="전체 국가"
-            disabled={countries.isPending || countries.isError}
-            options={(countries.data ?? []).map((item) => ({ value: item.name, label: item.name }))}
+            disabled={countries.isPending}
+            options={countries.options}
             value={country}
             onChange={(event) => updateQuery({ country: event.target.value })}
           />

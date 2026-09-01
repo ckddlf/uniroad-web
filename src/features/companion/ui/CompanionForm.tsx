@@ -4,12 +4,20 @@ import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useCountries } from '@/features/country/api';
+import { useCountryOptions } from '@/features/country/api';
 import { toErrorMessage } from '@/shared/api/errors';
 import type { CompanionPostResponse } from '@/shared/api/types';
 import { COMPANION_STATUS } from '@/shared/lib/constants';
 import { applyServerFieldErrors } from '@/shared/lib/form';
-import { Button, DateRangePicker, Input, Select, Textarea, useToast } from '@/shared/ui';
+import {
+  Button,
+  DateRangePicker,
+  Input,
+  Select,
+  SelectOrCustom,
+  Textarea,
+  useToast,
+} from '@/shared/ui';
 
 import { useCreateCompanion, useUpdateCompanion } from '../api';
 import {
@@ -45,7 +53,7 @@ function toDefaults(initial?: CompanionPostResponse): CompanionFormValues {
 export function CompanionForm({ postId, initial }: CompanionFormProps) {
   const router = useRouter();
   const toast = useToast();
-  const countries = useCountries();
+  const countries = useCountryOptions();
   const isEdit = postId !== undefined;
 
   const createCompanion = useCreateCompanion();
@@ -135,17 +143,18 @@ export function CompanionForm({ postId, initial }: CompanionFormProps) {
       />
 
       <div className="grid gap-4 sm:grid-cols-2">
-        <Select
+        <SelectOrCustom
           label="국가"
           required
           placeholder={countries.isPending ? '불러오는 중…' : '선택해주세요'}
-          disabled={countries.isPending || countries.isError}
-          options={(countries.data ?? []).map((country) => ({
-            value: country.name,
-            label: country.name,
-          }))}
+          options={countries.options}
+          customPlaceholder="예: 프랑스"
+          hint={countries.fallbackHint}
           error={errors.country?.message}
-          {...register('country')}
+          value={watch('country')}
+          onChange={(value) =>
+            setValue('country', value, { shouldDirty: true, shouldValidate: true })
+          }
         />
 
         <Input

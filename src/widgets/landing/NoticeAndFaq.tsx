@@ -6,6 +6,8 @@ import { fetchPublic } from '@/shared/api/server';
 import type { NoticeResponse } from '@/shared/api/types';
 import { formatDate } from '@/shared/lib/date';
 
+import { Card, Section, SectionHeading } from './Section';
+
 const FAQ = [
   {
     question: '아직 파견교가 정해지지 않았는데 가입해도 되나요?',
@@ -19,7 +21,8 @@ const FAQ = [
   },
   {
     question: '인증 심사는 얼마나 걸리나요?',
-    answer: '보통 1~2일 안에 확인합니다. 결과는 인증 화면에서 확인할 수 있고, 거절된 경우 사유를 함께 안내합니다.',
+    answer:
+      '보통 1~2일 안에 확인합니다. 결과는 인증 화면에서 확인할 수 있고, 거절된 경우 사유를 함께 안내합니다.',
   },
   {
     question: '제출한 서류 이미지는 누가 보나요?',
@@ -41,15 +44,24 @@ const FAQ = [
 /** 공지는 인증 없이 열리는 엔드포인트라 서버에서 미리 받아 정적으로 내보낸다 */
 export async function NoticeAndFaq() {
   const notices = await fetchPublic<NoticeResponse[]>(endpoints.notice.list);
-  const recent = (notices ?? []).slice(0, 3);
+  const recent = (notices ?? []).slice(0, 4);
 
   return (
-    <section className="border-t border-ink-100 bg-surface">
-      <div className="mx-auto grid max-w-[1200px] gap-12 px-6 py-20 lg:grid-cols-2">
-        <div>
+    <Section id="faq" tone="canvas">
+      <SectionHeading
+        eyebrow="Notice & FAQ"
+        title="시작하기 전에 궁금한 것들"
+        description="가입 전에 자주 나오는 질문과 최근 공지를 모았습니다."
+      />
+
+      <div className="mt-12 grid items-start gap-5 sm:mt-14 lg:grid-cols-[1fr_1.15fr]">
+        <Card className="flex flex-col">
           <div className="flex items-baseline justify-between gap-4">
-            <h2 className="text-h1 text-ink-900">공지사항</h2>
-            <Link href="/notices" className="text-caption font-medium text-brand-600 hover:underline">
+            <h3 className="text-h2 text-ink-900">공지사항</h3>
+            <Link
+              href="/notices"
+              className="text-caption font-medium text-brand-600 transition-colors hover:text-brand-700"
+            >
               전체 보기
             </Link>
           </div>
@@ -57,7 +69,7 @@ export async function NoticeAndFaq() {
           {recent.length === 0 ? (
             <p className="mt-6 text-body text-ink-500">아직 등록된 공지가 없어요.</p>
           ) : (
-            <ul className="mt-6 flex flex-col divide-y divide-ink-100">
+            <ul className="mt-2 flex flex-col divide-y divide-ink-100">
               {recent.map((notice) => (
                 <li key={notice.id}>
                   <Link
@@ -73,15 +85,15 @@ export async function NoticeAndFaq() {
               ))}
             </ul>
           )}
-        </div>
+        </Card>
 
-        <div>
-          <h2 className="text-h1 text-ink-900">자주 묻는 질문</h2>
+        <Card>
+          <h3 className="text-h2 text-ink-900">자주 묻는 질문</h3>
 
-          <div className="mt-6 flex flex-col divide-y divide-ink-100">
+          <div className="mt-2 flex flex-col divide-y divide-ink-100">
             {FAQ.map((item) => (
               <details key={item.question} className="group py-3.5">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-body text-ink-900">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-body font-medium text-ink-900">
                   {item.question}
                   <ChevronDown
                     aria-hidden
@@ -92,8 +104,8 @@ export async function NoticeAndFaq() {
               </details>
             ))}
           </div>
-        </div>
+        </Card>
       </div>
-    </section>
+    </Section>
   );
 }
