@@ -23,7 +23,7 @@ export default async function NoticesPage() {
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-16">
         <h1 className="text-h1 text-ink-900">공지사항</h1>
 
-        {notices === null ? (
+        {!Array.isArray(notices) ? (
           <p className="mt-8 text-body text-ink-500">
             공지를 불러오지 못했어요. 잠시 후 다시 열어주세요.
           </p>

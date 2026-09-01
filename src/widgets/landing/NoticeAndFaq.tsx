@@ -44,7 +44,7 @@ const FAQ = [
 /** 공지는 인증 없이 열리는 엔드포인트라 서버에서 미리 받아 정적으로 내보낸다 */
 export async function NoticeAndFaq() {
   const notices = await fetchPublic<NoticeResponse[]>(endpoints.notice.list);
-  const recent = (notices ?? []).slice(0, 4);
+  const recent = Array.isArray(notices) ? notices.slice(0, 4) : [];
 
   return (
     <Section id="faq" tone="canvas">

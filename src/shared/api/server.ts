@@ -6,13 +6,16 @@ import { unwrap } from './unwrap';
  *
  * 인증이 필요한 API는 절대 여기서 부르지 않는다 — accessToken은 브라우저 메모리에만 있다.
  */
-const BACKEND_ORIGIN = process.env.BACKEND_ORIGIN ?? 'http://api.uniroad.kr';
+const BACKEND_ORIGIN = process.env.BACKEND_ORIGIN ?? 'https://api.uniroad.kr';
 
 export async function fetchPublic<T>(path: string, revalidateSeconds = 300): Promise<T | null> {
   try {
     const response = await fetch(`${BACKEND_ORIGIN}${path}`, {
       headers: { Accept: 'application/json' },
       next: { revalidate: revalidateSeconds },
+      // 빌드 시점에도 이 fetch가 돈다. 백엔드가 응답하지 않으면 Next의 정적 생성
+      // 타임아웃(60초)에 걸려 배포가 통째로 실패하므로 먼저 끊는다.
+      signal: AbortSignal.timeout(8_000),
     });
 
     if (!response.ok) return null;
