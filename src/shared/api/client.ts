@@ -19,7 +19,14 @@ import type { ApiResponse, ReissueRequest, TokenResponse } from './types';
  * 브라우저는 항상 프록시 경로(`/backend`)로 호출하고 Next 서버가 백엔드로 중계한다.
  * 백엔드가 HTTPS + CORS를 지원하면 이 환경 변수만 바꾸면 프록시를 끌 수 있다.
  */
-export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '/backend';
+const configuredBaseUrl = process.env.NEXT_PUBLIC_API_BASE_URL?.trim().replace(/\/+$/, '');
+
+/**
+ * 빈 문자열과 `/`는 설정 누락으로 본다.
+ * `??`로 두면 값이 빈 환경변수가 통과해 baseURL이 사라지고,
+ * 요청이 Next 자신에게 가 404가 난다.
+ */
+export const API_BASE_URL = configuredBaseUrl ? configuredBaseUrl : '/backend';
 
 interface RetriableConfig extends InternalAxiosRequestConfig {
   /** 재발급 후 재시도는 요청당 한 번만 */
