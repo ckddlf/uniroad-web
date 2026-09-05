@@ -42,3 +42,7 @@ next-env.d.ts
 
 # .env.example은 커밋한다
 !.env.example
+
+# 로컬에서 화면을 확인하려고 만드는 임시 샘플 이미지.
+# 이걸 참조하는 글은 로컬 DB에만 있고 기능 코드는 참조하지 않는다.
+/public/sample/
