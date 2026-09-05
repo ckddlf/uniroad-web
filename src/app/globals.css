@@ -136,6 +136,162 @@
     overflow: hidden;
   }
 
+  /*
+    블로그 본문 서식.
+    에디터(.blog-content가 붙은 ProseMirror 영역)와 공개 페이지가 같은 클래스를 써서
+    "쓸 때 보이던 모습"과 "올라간 모습"이 어긋나지 않게 한다.
+  */
+  .blog-content {
+    color: var(--color-ink-700);
+    font-size: 1.0625rem;
+    line-height: 1.85;
+  }
+
+  .blog-content > * + * {
+    margin-top: 1.15em;
+  }
+
+  .blog-content h2,
+  .blog-content h3,
+  .blog-content h4 {
+    color: var(--color-ink-900);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    line-height: 1.4;
+  }
+
+  .blog-content h2 {
+    margin-top: 2.4em;
+    font-size: 1.5rem;
+  }
+  .blog-content h3 {
+    margin-top: 2em;
+    font-size: 1.25rem;
+  }
+  .blog-content h4 {
+    margin-top: 1.8em;
+    font-size: 1.0625rem;
+  }
+
+  /* 첫 블록 위에는 여백을 주지 않는다 */
+  .blog-content > :first-child {
+    margin-top: 0;
+  }
+
+  .blog-content strong {
+    font-weight: 700;
+    color: var(--color-ink-900);
+  }
+
+  .blog-content a {
+    color: var(--color-brand-600);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .blog-content ul,
+  .blog-content ol {
+    padding-left: 1.35em;
+  }
+  .blog-content ul {
+    list-style: disc;
+  }
+  .blog-content ol {
+    list-style: decimal;
+  }
+  .blog-content li + li {
+    margin-top: 0.4em;
+  }
+  .blog-content li > ul,
+  .blog-content li > ol {
+    margin-top: 0.4em;
+  }
+
+  .blog-content blockquote {
+    border-left: 3px solid var(--color-brand-500);
+    padding-left: 1em;
+    color: var(--color-ink-500);
+  }
+
+  .blog-content hr {
+    border: 0;
+    border-top: 1px solid var(--color-ink-100);
+    margin-block: 2.4em;
+  }
+
+  .blog-content code {
+    background-color: var(--color-ink-100);
+    border-radius: var(--radius-sm);
+    padding: 0.15em 0.4em;
+    font-size: 0.9em;
+  }
+
+  .blog-content pre {
+    background-color: var(--color-ink-900);
+    color: #f2f4f6;
+    border-radius: var(--radius-md);
+    padding: 1em 1.15em;
+    overflow-x: auto;
+  }
+  .blog-content pre code {
+    background: none;
+    color: inherit;
+    padding: 0;
+  }
+
+  .blog-content img {
+    border-radius: var(--radius-md);
+    max-width: 100%;
+    height: auto;
+  }
+
+  /*
+    형광펜 색.
+    서버 소독기가 style 속성을 막기 때문에 색은 data-color로만 전달되고,
+    실제 배경색은 여기서 입힌다. 에디터와 공개 화면이 같은 규칙을 공유한다.
+  */
+  .blog-content mark {
+    background-color: #fff3a3;
+    border-radius: 3px;
+    padding: 0.05em 0.15em;
+    color: inherit;
+  }
+  .blog-content mark[data-color='yellow'] {
+    background-color: #fff3a3;
+  }
+  .blog-content mark[data-color='blue'] {
+    background-color: #cfe3ff;
+  }
+  .blog-content mark[data-color='green'] {
+    background-color: #cdf0d8;
+  }
+  .blog-content mark[data-color='pink'] {
+    background-color: #ffd6e5;
+  }
+
+  /* 툴바의 형광펜 색상 버튼 — 위 색과 같은 값을 쓴다 */
+  .blog-highlight-swatch-yellow {
+    background-color: #fff3a3;
+  }
+  .blog-highlight-swatch-blue {
+    background-color: #cfe3ff;
+  }
+  .blog-highlight-swatch-green {
+    background-color: #cdf0d8;
+  }
+  .blog-highlight-swatch-pink {
+    background-color: #ffd6e5;
+  }
+
+  /* 에디터가 비었을 때 placeholder를 띄운다 (@tiptap/extension-placeholder) */
+  .blog-content p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    color: var(--color-ink-300);
+    float: left;
+    height: 0;
+    pointer-events: none;
+  }
+
   /* 랜딩 히어로 상단에 아주 옅게 깔리는 브랜드 톤 (장식은 여기 하나뿐) */
   .landing-hero-tint {
     background-image: radial-gradient(
