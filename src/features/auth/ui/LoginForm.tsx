@@ -127,7 +127,7 @@ export function LoginForm() {
           아직 비밀번호를 직접 재설정하는 기능이 준비되지 않았어요. 가입하신 아이디와 함께
           운영팀에 문의해주시면 확인 후 도와드리겠습니다.
         </p>
-        <p className="mt-3 text-body text-ink-900">문의: help@uniroad.kr</p>
+        <p className="mt-3 text-body text-ink-900">문의: uniroad.official@gmail.com</p>
       </Modal>
     </>
   );

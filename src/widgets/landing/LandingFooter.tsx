@@ -40,10 +40,10 @@ export function LandingFooter() {
               이용약관 · 개인정보처리방침
             </Link>
             <a
-              href="mailto:help@uniroad.kr"
+              href="mailto:uniroad.official@gmail.com"
               className="text-body text-ink-500 transition-colors hover:text-ink-900"
             >
-              문의: help@uniroad.kr
+              문의: uniroad.official@gmail.com
             </a>
           </nav>
         </div>
