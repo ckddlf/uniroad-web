@@ -9,7 +9,7 @@ import { buttonClass } from '@/shared/ui/Button';
 const ANCHORS = [
   { href: '/#features', label: '기능 소개' },
   { href: '/#how', label: '이용 방법' },
-  { href: '/#faq', label: '자주 묻는 질문' },
+  { href: '/#faq', label: 'FAQ' },
   { href: '/blog', label: '블로그' },
 ];
 

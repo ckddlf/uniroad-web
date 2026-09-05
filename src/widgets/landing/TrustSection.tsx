@@ -61,8 +61,9 @@ export function TrustSection() {
       <div className="mt-14 rounded-lg border border-brand-100 bg-brand-50 p-6 sm:p-8">
         <h3 className="text-h2 text-ink-900">제출한 서류는 어떻게 다루나요?</h3>
         <p className="mt-3 max-w-3xl text-body text-ink-700">
-          제출한 이미지는 심사를 맡은 운영진만 열람하며, 다른 회원에게는 공개되지 않습니다. 심사
-          목적으로만 사용하니 주민등록번호나 계좌번호는 가려서 올려주세요.
+          제출한 이미지는 심사를 맡은 운영진만 열람하며, 다른 회원에게는 공개되지 않습니다.
+          <br />
+          심사 목적으로만 사용하니 주민등록번호나 계좌번호는 가려서 올려주세요.
         </p>
       </div>
     </Section>
