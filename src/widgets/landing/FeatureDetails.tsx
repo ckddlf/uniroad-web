@@ -20,7 +20,7 @@ type Feature = {
   key: string;
   label: string;
   icon: typeof ListChecks;
-  title: string;
+  title: ReactNode;
   description: ReactNode;
   mock: ReactNode;
 };
@@ -30,17 +30,25 @@ function Em({ children }: { children: ReactNode }) {
   return <strong className="font-medium text-ink-900">{children}</strong>;
 }
 
+/** 제목에서 그 기능의 핵심을 브랜드 색으로 집어내는 자리 */
+function Accent({ children }: { children: ReactNode }) {
+  return <span className="text-brand-600">{children}</span>;
+}
+
 const FEATURES: Feature[] = [
   {
     key: 'prep',
     label: 'PREP',
     icon: ListChecks,
-    title: '흩어진 준비 과정을 한 화면에서',
-    description: (
+    title: (
       <>
-        준비 일정과 제출 서류를 <Em>타임라인·체크리스트로 정리</Em>해 한눈에 관리할 수 있습니다.
+        흩어진 준비 과정을 한 화면에서
+        <br />
+        <Accent>타임라인 체크리스트로 한눈에 관리</Accent>
       </>
     ),
+    description:
+      '입학허가서, 파견 승인서, 비자 등 준비서류와 일정을 놓치지 않게 도와드립니다.',
     mock: (
       <MockPanel title="제출 서류" trailing="4 / 9">
         <ProgressBar value={44} className="mb-1" />
@@ -55,7 +63,13 @@ const FEATURES: Feature[] = [
     key: 'trade',
     label: 'TRADE',
     icon: ShoppingBag,
-    title: '정착 물품 거래를 더 빠르고 안전하게',
+    title: (
+      <>
+        정착 물품 거래, 더 빠르고 안전하게
+        <br />
+        <Accent>인증된 교환학생 간 신뢰 거래</Accent>
+      </>
+    ),
     description: (
       <>
         인증된 교환학생 간 거래로 필요한 물품을 <Em>쉽게 찾고 안심하고 거래</Em>할 수 있습니다.
@@ -73,7 +87,13 @@ const FEATURES: Feature[] = [
     key: 'ticket',
     label: 'TICKET',
     icon: Ticket,
-    title: '못 쓰게 된 티켓도 필요한 사람에게',
+    title: (
+      <>
+        못 쓰게 된 기차·관광 티켓도
+        <br />
+        <Accent>필요한 교환학생에게 빠르게 양도</Accent>
+      </>
+    ),
     description: (
       <>
         기차·항공·공연·숙소 티켓을 <Em>유형별로 등록하고 빠르게 양도</Em>할 수 있습니다.
@@ -91,7 +111,11 @@ const FEATURES: Feature[] = [
     key: 'matching',
     label: 'MATCHING',
     icon: Users,
-    title: '일정이 맞는 교환학생과 쉽게 연결',
+    title: (
+      <>
+        일정이 맞는 <Accent>교환학생과 빠르게 연결</Accent>
+      </>
+    ),
     description: (
       <>
         조건이 맞는 교환학생을 찾아 <Em>동행과 정보 공유로 연결</Em>할 수 있습니다.
@@ -112,7 +136,13 @@ export function FeatureDetails() {
     <Section id="features" tone="canvas">
       <SectionHeading
         eyebrow="Features"
-        title="준비부터 현지 생활까지, 네 가지 흐름"
+        title={
+          <>
+            교환학생을 위한 올인원 서비스
+            <br />
+            UNIROAD를 소개합니다
+          </>
+        }
         description="출국 전 준비, 정착 물품 거래, 티켓 양도, 동행 찾기. 교환학생 기간에 실제로 필요한 순서대로 이어집니다."
       />
 

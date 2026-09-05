@@ -10,32 +10,12 @@ const COLUMNS = ['블로그', '오픈카톡', 'UNIROAD'] as const;
 /** yes = 갖춤 / partial = 경우에 따라 다름 / no = 기대하기 어려움 */
 type Mark = 'yes' | 'partial' | 'no';
 
-const ROWS: { label: string; note: string; values: [Mark, Mark, Mark] }[] = [
-  {
-    label: '정보 최신성',
-    note: '올해 기수의 정보를 바로 찾을 수 있는가',
-    values: ['no', 'partial', 'yes'],
-  },
-  {
-    label: '기록이 남음',
-    note: '지난 대화와 글을 나중에 다시 찾을 수 있는가',
-    values: ['yes', 'no', 'yes'],
-  },
-  {
-    label: '현지 거래',
-    note: '파견지에서 물건을 주고받을 수 있는가',
-    values: ['no', 'yes', 'yes'],
-  },
-  {
-    label: '신원 확인',
-    note: '상대가 실제 교환학생인지 확인되는가',
-    values: ['no', 'no', 'yes'],
-  },
-  {
-    label: '준비 일정 관리',
-    note: '마감과 제출 서류를 한 곳에서 관리할 수 있는가',
-    values: ['no', 'no', 'yes'],
-  },
+const ROWS: { label: string; values: [Mark, Mark, Mark] }[] = [
+  { label: '정보 최신성', values: ['no', 'partial', 'yes'] },
+  { label: '기록이 남음', values: ['yes', 'no', 'yes'] },
+  { label: '현지 거래', values: ['no', 'yes', 'yes'] },
+  { label: '신원 확인', values: ['no', 'no', 'yes'] },
+  { label: '준비 일정 관리', values: ['no', 'no', 'yes'] },
 ];
 
 const MARK_LABEL: Record<Mark, string> = {
@@ -78,7 +58,7 @@ export function WhyUniroad() {
       <SectionHeading
         eyebrow="Why UNIROAD"
         title="왜 UNIROAD인가"
-        description="블로그와 오픈카톡에서 흔히 겪는 아쉬움을 기준으로 정리했습니다. 서비스마다 운영 방식이 달라 일반적인 경향으로 봐주세요."
+        description="블로그와 오픈카톡에서 흔히 겪는 아쉬움을 기준으로 정리했습니다."
       />
 
       <div className="mt-10 overflow-hidden rounded-lg border border-ink-100 bg-surface shadow-card">
@@ -114,9 +94,11 @@ export function WhyUniroad() {
                   key={row.label}
                   className={rowIndex === ROWS.length - 1 ? undefined : 'border-b border-ink-100'}
                 >
-                  <th scope="row" className="px-6 py-4 font-normal">
-                    <span className="block text-body font-medium text-ink-900">{row.label}</span>
-                    <span className="mt-0.5 block text-caption text-ink-500">{row.note}</span>
+                  <th
+                    scope="row"
+                    className="px-6 py-4 text-body font-medium text-ink-900"
+                  >
+                    {row.label}
                   </th>
 
                   {row.values.map((mark, index) => {

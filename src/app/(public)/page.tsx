@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { GuestOnly } from '@/features/auth/ui/GuestOnly';
+import { Credentials } from '@/widgets/landing/Credentials';
 import { FeatureDetails } from '@/widgets/landing/FeatureDetails';
 import { FinalCta } from '@/widgets/landing/FinalCta';
 import { Hero } from '@/widgets/landing/Hero';
@@ -38,6 +39,7 @@ export default function LandingPage() {
         <HowItWorks />
         <WhyUniroad />
         <TrustSection />
+        <Credentials />
         <NoticeAndFaq />
         <FinalCta />
       </main>

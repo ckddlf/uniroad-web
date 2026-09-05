@@ -10,10 +10,10 @@ export function FinalCta() {
     <Section tone="brand">
       <div className="flex flex-col items-center text-center">
         <h2 className="text-section text-white text-balance">
-          다음 학기 준비, 오늘 한 곳에서 시작하세요
+          교환학생을 위한 통합 플랫폼, UNIROAD
         </h2>
         <p className="mt-5 max-w-xl text-lead text-brand-100">
-          파견 준비 일정과 제출 서류부터 현지 거래와 동행까지. 가입하고 바로 둘러볼 수 있습니다.
+          파견 준비부터 거래와 동행까지, 필요한 모든 경험을 한곳에서 만나보세요.
         </p>
 
         <div className="mt-9 flex w-full flex-col gap-3 sm:w-auto sm:flex-row">

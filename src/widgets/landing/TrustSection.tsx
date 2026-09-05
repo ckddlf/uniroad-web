@@ -1,4 +1,4 @@
-import { BadgeCheck, Globe, MessagesSquare, ShieldCheck } from 'lucide-react';
+import { BadgeCheck, Globe, ShieldCheck } from 'lucide-react';
 
 import { MockPanel, MockRow } from './MockUi';
 import { IconTile, Section, SectionHeading } from './Section';
@@ -20,12 +20,6 @@ const TRUST_POINTS = [
     icon: Globe,
     title: '파견 학교 · 국가 기준 정보',
     description: '내 파견지를 기준으로 글과 거래글을 모아 보여줍니다.',
-  },
-  {
-    icon: MessagesSquare,
-    title: '실제 교환학생이 남긴 기록',
-    description:
-      '다녀온 사람이 남긴 글과 거래 내역이 그대로 쌓여 다음 기수의 자료가 됩니다.',
   },
 ];
 

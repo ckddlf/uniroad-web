@@ -30,7 +30,7 @@ export function PainPoints() {
           <>
             복잡한 준비에 쓰는 시간은 줄이고,
             <br />
-            교환학생 경험에 집중할 수 있도록
+            <span className="text-brand-600">교환학생 경험</span>에 집중할 수 있도록
           </>
         }
       />

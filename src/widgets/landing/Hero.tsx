@@ -1,10 +1,7 @@
 import Link from 'next/link';
-import { ArrowRight, CalendarDays, MapPin, MessagesSquare, ShoppingBag } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 import { buttonClass } from '@/shared/ui/Button';
-import { ProgressBar } from '@/shared/ui/ProgressBar';
-
-import { MockPanel, MockRow } from './MockUi';
 
 export function Hero() {
   return (
@@ -44,69 +41,8 @@ export function Hero() {
               로그인
             </Link>
           </div>
-
-          <p className="mt-4 text-caption text-ink-500">
-            아이디와 비밀번호만 있으면 됩니다.
-          </p>
         </div>
-
-        <HeroPreview />
       </div>
     </section>
-  );
-}
-
-/** 히어로 아래에 놓이는 홈 화면 미리보기 도식 */
-function HeroPreview() {
-  return (
-    <div className="mt-16 sm:mt-20">
-      <div className="mx-auto max-w-[980px] overflow-hidden rounded-lg border border-ink-100 bg-canvas shadow-pop">
-        <div className="flex items-center gap-1.5 border-b border-ink-100 bg-surface px-4 py-3">
-          <span aria-hidden className="size-2.5 rounded-full bg-ink-100" />
-          <span aria-hidden className="size-2.5 rounded-full bg-ink-100" />
-          <span aria-hidden className="size-2.5 rounded-full bg-ink-100" />
-          <p className="ml-2 text-caption text-ink-500">UNIROAD · 홈</p>
-        </div>
-
-        <div className="grid gap-4 p-4 sm:p-5 md:grid-cols-2">
-          <div className="rounded-lg border border-ink-100 bg-surface p-5 shadow-card md:col-span-2">
-            <div className="flex flex-wrap items-end justify-between gap-x-6 gap-y-3">
-              <div>
-                <p className="text-caption text-ink-500">파견까지</p>
-                <p className="mt-1 text-display text-ink-900">D-72</p>
-              </div>
-              <p className="flex items-center gap-2 text-caption text-ink-500">
-                <CalendarDays aria-hidden className="size-4 text-brand-600" />
-                2026-03-02 출국 · 프랑스 파리
-              </p>
-            </div>
-          </div>
-
-          <MockPanel title="제출 서류" trailing="4 / 9">
-            <ProgressBar value={44} className="mb-1" />
-            <MockRow label="성적증명서" checked />
-            <MockRow label="어학성적표" checked />
-            <MockRow label="수학계획서" checked={false} />
-          </MockPanel>
-
-          <MockPanel title="오늘 올라온 글">
-            <MockRow
-              icon={<ShoppingBag className="size-4" />}
-              label="자취 살림 통째로"
-              trailing="€80"
-            />
-            <MockRow
-              icon={<MapPin className="size-4" />}
-              label="파리 → 니스 주말 동행"
-              trailing="2/4명"
-            />
-            <MockRow
-              icon={<MessagesSquare className="size-4" />}
-              label="비자 예약, 언제 잡으셨나요?"
-            />
-          </MockPanel>
-        </div>
-      </div>
-    </div>
   );
 }

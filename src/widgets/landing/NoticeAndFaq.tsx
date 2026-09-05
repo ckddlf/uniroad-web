@@ -47,7 +47,7 @@ export async function NoticeAndFaq() {
   const recent = Array.isArray(notices) ? notices.slice(0, 4) : [];
 
   return (
-    <Section id="faq" tone="canvas">
+    <Section id="faq" tone="surface">
       <SectionHeading
         eyebrow="Notice & FAQ"
         title="시작하기 전에 궁금한 것들"
@@ -55,7 +55,7 @@ export async function NoticeAndFaq() {
       />
 
       <div className="mt-12 grid items-start gap-5 sm:mt-14 lg:grid-cols-[1fr_1.15fr]">
-        <Card className="flex flex-col">
+        <Card tone="canvas" className="flex flex-col">
           <div className="flex items-baseline justify-between gap-4">
             <h3 className="text-h2 text-ink-900">공지사항</h3>
             <Link
@@ -87,7 +87,7 @@ export async function NoticeAndFaq() {
           )}
         </Card>
 
-        <Card>
+        <Card tone="canvas">
           <h3 className="text-h2 text-ink-900">자주 묻는 질문</h3>
 
           <div className="mt-2 flex flex-col divide-y divide-ink-100">
