@@ -11,6 +11,7 @@ const ANCHORS = [
   { href: '/#how', label: '이용 방법' },
   { href: '/#why', label: '왜 UNIROAD' },
   { href: '/#faq', label: '자주 묻는 질문' },
+  { href: '/blog', label: '블로그' },
 ];
 
 export function LandingHeader() {

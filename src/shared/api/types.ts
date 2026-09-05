@@ -570,6 +570,50 @@ export interface NoticeResponse {
   updatedAt: string;
 }
 
+/* ─────────── Blog ─────────── */
+/** 에디터(ProseMirror) 원본. 서버는 들여다보지 않고 그대로 주고받는다. */
+export type BlogContentJson = Record<string, unknown>;
+
+export type BlogPostStatus = 'DRAFT' | 'PUBLISHED';
+
+export interface BlogPostRequest {
+  title: string;
+  slug: string;
+  summary: string;
+  thumbnailUrl: string;
+  contentJson: BlogContentJson;
+  contentHtml: string;
+  published: boolean;
+}
+
+export interface BlogPostSummaryResponse {
+  id: number;
+  slug: string;
+  title: string;
+  summary: string | null;
+  thumbnailUrl: string | null;
+  authorNickname: string | null;
+  status: BlogPostStatus;
+  publishedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+  viewCount: number;
+  likeCount: number;
+  likedByMe: boolean;
+}
+
+export interface BlogPostDetailResponse extends BlogPostSummaryResponse {
+  contentHtml: string;
+  /** 관리자 수정 화면에서만 채워진다 */
+  contentJson: BlogContentJson | null;
+}
+
+export interface BlogPostLikeResponse {
+  postId: number;
+  liked: boolean;
+  likeCount: number;
+}
+
 /* ─────────── Report ─────────── */
 export interface ReportRequest {
   targetType: ReportTargetType;

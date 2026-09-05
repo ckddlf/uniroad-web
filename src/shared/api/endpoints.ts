@@ -136,6 +136,22 @@ export const endpoints = {
     create: '/api/reports',
   },
 
+  blog: {
+    list: '/api/blog/posts',
+    detail: (slug: string) => `/api/blog/posts/${slug}`,
+    like: (postId: number) => `/api/blog/posts/${postId}/like`,
+  },
+
+  adminBlog: {
+    list: '/api/admin/blog/posts',
+    detail: (postId: number) => `/api/admin/blog/posts/${postId}`,
+    create: '/api/admin/blog/posts',
+    update: (postId: number) => `/api/admin/blog/posts/${postId}`,
+    publish: (postId: number) => `/api/admin/blog/posts/${postId}/publish`,
+    unpublish: (postId: number) => `/api/admin/blog/posts/${postId}/unpublish`,
+    remove: (postId: number) => `/api/admin/blog/posts/${postId}`,
+  },
+
   admin: {
     dashboard: '/api/admin/dashboard',
     members: '/api/admin/members',

@@ -84,6 +84,14 @@ export const queryKeys = {
     detail: (noticeId: number) => ['notice', 'detail', noticeId] as const,
   },
 
+  blog: {
+    all: () => ['blog'] as const,
+    list: () => ['blog', 'list'] as const,
+    detail: (slug: string) => ['blog', 'detail', slug] as const,
+    adminList: () => ['blog', 'admin', 'list'] as const,
+    adminDetail: (postId: number) => ['blog', 'admin', 'detail', postId] as const,
+  },
+
   admin: {
     dashboard: () => ['admin', 'dashboard'] as const,
     members: () => ['admin', 'members'] as const,

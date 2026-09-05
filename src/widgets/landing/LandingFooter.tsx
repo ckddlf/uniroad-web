@@ -30,6 +30,9 @@ export function LandingFooter() {
 
           <nav aria-label="안내" className="flex flex-col gap-3">
             <p className="text-label text-ink-900">안내</p>
+            <Link href="/blog" className="text-body text-ink-500 transition-colors hover:text-ink-900">
+              블로그
+            </Link>
             <Link href="/notices" className="text-body text-ink-500 transition-colors hover:text-ink-900">
               공지사항
             </Link>

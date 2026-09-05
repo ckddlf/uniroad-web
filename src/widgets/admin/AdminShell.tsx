@@ -3,7 +3,7 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BadgeCheck, LayoutDashboard, Megaphone, Siren, Users } from 'lucide-react';
+import { BadgeCheck, LayoutDashboard, Megaphone, PenLine, Siren, Users } from 'lucide-react';
 
 import { cn } from '@/shared/lib/cn';
 
@@ -13,6 +13,7 @@ const MENU = [
   { href: '/admin/verifications', label: '인증 심사', icon: BadgeCheck },
   { href: '/admin/reports', label: '신고 관리', icon: Siren },
   { href: '/admin/notices', label: '공지 관리', icon: Megaphone },
+  { href: '/admin/blog', label: '블로그', icon: PenLine },
 ];
 
 /** 일반 GNB 대신 쓰는 관리자 전용 셸 */
