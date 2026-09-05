@@ -4,7 +4,8 @@ import Link from 'next/link';
 import { Logo } from '@/shared/ui/Logo';
 
 export interface AuthShellProps {
-  title: string;
+  /** 로고 이미지를 섞어 넣는 화면이 있어 문자열이 아니라 노드로 받는다 */
+  title: ReactNode;
   description?: string;
   /** 회원가입처럼 여러 단계를 진행하는 화면의 진행 표시 */
   progress?: ReactNode;

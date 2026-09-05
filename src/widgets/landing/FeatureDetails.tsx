@@ -11,6 +11,7 @@ import {
   Users,
 } from 'lucide-react';
 
+import { Logo } from '@/shared/ui/Logo';
 import { ProgressBar } from '@/shared/ui/ProgressBar';
 
 import { MockPanel, MockRow } from './MockUi';
@@ -140,7 +141,7 @@ export function FeatureDetails() {
           <>
             교환학생을 위한 올인원 서비스
             <br />
-            UNIROAD를 소개합니다
+            <Logo tone="ink" inline />를 소개합니다
           </>
         }
         description="출국 전 준비, 정착 물품 거래, 티켓 양도, 동행 찾기. 교환학생 기간에 실제로 필요한 순서대로 이어집니다."

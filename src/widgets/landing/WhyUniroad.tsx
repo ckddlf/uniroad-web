@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Check, Minus, X } from 'lucide-react';
 
 import { cn } from '@/shared/lib/cn';
+import { Logo } from '@/shared/ui/Logo';
 
 import { Section, SectionHeading } from './Section';
 
@@ -57,7 +58,11 @@ export function WhyUniroad() {
     <Section id="why" tone="canvas">
       <SectionHeading
         eyebrow="Why UNIROAD"
-        title="왜 UNIROAD인가"
+        title={
+          <>
+            왜 <Logo tone="ink" inline />인가
+          </>
+        }
         description="블로그와 오픈카톡에서 흔히 겪는 아쉬움을 기준으로 정리했습니다."
       />
 

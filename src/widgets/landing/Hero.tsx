@@ -17,7 +17,7 @@ export function Hero() {
             교환학생 준비부터 현지 생활까지,
             <br />
             {/* 워드마크 높이를 글자 크기에 매달아, 제목이 줄어들 때 로고도 같이 줄어들게 한다 */}
-            <Logo tone="ink" priority className="inline-block h-[0.78em] align-baseline" /> 하나로
+            <Logo tone="ink" inline priority /> 하나로
           </h1>
 
           <p className="mt-6 max-w-xl text-lead text-ink-500 text-balance">

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { GuestOnly } from '@/features/auth/ui/GuestOnly';
 import { SignUpForm } from '@/features/auth/ui/SignUpForm';
+import { Logo } from '@/shared/ui/Logo';
 import { AuthShell } from '@/widgets/auth/AuthShell';
 
 export const metadata: Metadata = {
@@ -12,7 +13,13 @@ export const metadata: Metadata = {
 export default function SignUpPage() {
   return (
     <GuestOnly>
-      <AuthShell title="UNIROAD 시작하기">
+      <AuthShell
+        title={
+          <>
+            <Logo tone="ink" inline /> 시작하기
+          </>
+        }
+      >
         <SignUpForm />
       </AuthShell>
     </GuestOnly>

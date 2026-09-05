@@ -1,5 +1,7 @@
 import { Award, ClipboardList, Plane, Rocket } from 'lucide-react';
 
+import { Logo } from '@/shared/ui/Logo';
+
 import { Card, IconTile, Section, SectionHeading } from './Section';
 
 const CREDENTIALS = [
@@ -31,7 +33,11 @@ export function Credentials() {
       <SectionHeading
         align="center"
         eyebrow="Proof"
-        title="UNIROAD는 이렇게 검증하고 인정받았어요"
+        title={
+          <>
+            <Logo tone="ink" inline />는 이렇게 검증하고 인정받았어요
+          </>
+        }
       />
 
       <div className="mt-12 grid gap-5 sm:mt-14 md:grid-cols-2">

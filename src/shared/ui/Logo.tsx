@@ -17,12 +17,18 @@ const SRC = {
 
 export interface LogoProps {
   tone?: keyof typeof SRC;
+  /**
+   * 제목이나 문장 안에 글자처럼 섞이는 자리.
+   * 높이를 글자 크기에 매달아 반응형으로 글자가 줄면 로고도 같이 줄고, 기준선을 맞춘다.
+   * 0.78em은 워드마크의 어센더 높이가 옆 한글 글자 높이와 나란히 보이는 값이다.
+   */
+  inline?: boolean;
   /** 높이만 준다. 폭은 원본 비율대로 따라온다 */
   className?: string;
   priority?: boolean;
 }
 
-export function Logo({ tone = 'brand', className, priority }: LogoProps) {
+export function Logo({ tone = 'brand', inline, className, priority }: LogoProps) {
   return (
     <Image
       src={SRC[tone]}
@@ -30,7 +36,7 @@ export function Logo({ tone = 'brand', className, priority }: LogoProps) {
       width={SIZE.width}
       height={SIZE.height}
       priority={priority}
-      className={cn('w-auto', className)}
+      className={cn('w-auto', inline && 'inline-block h-[0.78em] align-baseline', className)}
     />
   );
 }

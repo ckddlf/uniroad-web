@@ -6,6 +6,7 @@ import { endpoints } from '@/shared/api/endpoints';
 import { fetchPublic } from '@/shared/api/server';
 import type { BlogPostSummaryResponse, CursorPage } from '@/shared/api/types';
 import { EmptyState } from '@/shared/ui';
+import { Logo } from '@/shared/ui/Logo';
 import { LandingFooter } from '@/widgets/landing/LandingFooter';
 import { LandingHeader } from '@/widgets/landing/LandingHeader';
 
@@ -39,7 +40,9 @@ export default async function BlogPage() {
         <div className="mx-auto w-full max-w-[1200px] px-6 py-16 sm:px-8 sm:py-20">
           <header className="flex flex-col gap-3">
             <p className="text-label tracking-[0.16em] text-brand-600 uppercase">Blog</p>
-            <h1 className="text-section text-ink-900 text-balance">UNIROAD가 쓰는 글</h1>
+            <h1 className="text-section text-ink-900 text-balance">
+              <Logo tone="ink" inline />가 쓰는 글
+            </h1>
             <p className="max-w-2xl text-lead text-ink-500">
               교환학생 준비와 현지 생활에서 실제로 마주한 것들을 정리해 남깁니다.
             </p>
