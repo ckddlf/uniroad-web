@@ -9,7 +9,7 @@ export function LandingFooter() {
         <div>
           <Logo className="h-6" />
           <p className="mt-3 max-w-sm text-body text-ink-500">
-            교환학생 준비부터 현지 생활까지. 남겨주신 기록이 다음 기수의 자료가 됩니다.
+            교환학생에게 필요한 정보부터 거래, 네트워크까지 UNIROAD에서 만나보세요.
           </p>
         </div>
 
