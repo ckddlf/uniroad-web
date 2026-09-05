@@ -4,12 +4,12 @@
    UNIROAD 디자인 토큰
    ──────────────────────────────────────────────── */
 @theme {
-  /* 브랜드 */
-  --color-brand-50: #eef7f2;
-  --color-brand-100: #d3ebde;
-  --color-brand-500: #17976b;
-  --color-brand-600: #127956;
-  --color-brand-700: #0d5c42;
+  /* 브랜드 (남색) */
+  --color-brand-50: #eef2fa;
+  --color-brand-100: #d3e0f3;
+  --color-brand-500: #1f4f9e;
+  --color-brand-600: #173e80;
+  --color-brand-700: #0f2d5e;
 
   /* 잉크(텍스트·라인) */
   --color-ink-900: #16181a;
@@ -29,8 +29,8 @@
   --color-warning-bg: #fdf6e9;
   --color-info: #2b6cb0;
   --color-info-bg: #eef4fb;
-  --color-success: #17976b;
-  --color-success-bg: #eef7f2;
+  --color-success: #1f4f9e;
+  --color-success-bg: #eef2fa;
 
   /* 타이포 */
   --font-sans:
