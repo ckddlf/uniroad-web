@@ -1,6 +1,7 @@
 import Link from 'next/link';
 
 import { buttonClass } from '@/shared/ui/Button';
+import { Logo } from '@/shared/ui/Logo';
 
 /**
  * 랜딩 섹션으로 가는 앵커.
@@ -17,11 +18,8 @@ export function LandingHeader() {
   return (
     <header className="sticky top-0 z-30 border-b border-ink-100 bg-surface/85 break-keep backdrop-blur">
       <div className="mx-auto flex h-16 w-full max-w-[1200px] items-center justify-between gap-6 px-6 sm:px-8">
-        <Link
-          href="/"
-          className="text-h2 font-bold tracking-tight text-brand-600 whitespace-nowrap"
-        >
-          UNIROAD
+        <Link href="/" aria-label="UNIROAD 홈" className="shrink-0">
+          <Logo priority className="h-6" />
         </Link>
 
         <nav aria-label="페이지 안내" className="hidden items-center gap-1 lg:flex">

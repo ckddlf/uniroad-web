@@ -1,11 +1,13 @@
 import Link from 'next/link';
 
+import { Logo } from '@/shared/ui/Logo';
+
 export function LandingFooter() {
   return (
     <footer className="border-t border-ink-100 bg-surface break-keep">
       <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-6 py-14 sm:px-8 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <p className="text-h2 font-bold tracking-tight text-brand-600">UNIROAD</p>
+          <Logo className="h-6" />
           <p className="mt-3 max-w-sm text-body text-ink-500">
             교환학생 준비부터 현지 생활까지. 남겨주신 기록이 다음 기수의 자료가 됩니다.
           </p>

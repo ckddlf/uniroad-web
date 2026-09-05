@@ -13,6 +13,7 @@ export { Field } from './Field';
 export { ImageUploader } from './ImageUploader';
 export { InfiniteScrollSentinel } from './InfiniteScrollSentinel';
 export { Input } from './Input';
+export { Logo } from './Logo';
 export { Modal } from './Modal';
 export { Pagination } from './Pagination';
 export { ProgressBar } from './ProgressBar';

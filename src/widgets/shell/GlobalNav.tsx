@@ -15,7 +15,7 @@ import { useLogout } from '@/features/auth/model/useAuthActions';
 import { cn } from '@/shared/lib/cn';
 import { displayName } from '@/shared/lib/format';
 import { selectIsAdmin, useAuthStore } from '@/shared/store/authStore';
-import { Avatar, Dropdown, DropdownDivider, DropdownItem } from '@/shared/ui';
+import { Avatar, Dropdown, DropdownDivider, DropdownItem, Logo } from '@/shared/ui';
 
 import { NotificationBell } from './NotificationBell';
 
@@ -44,8 +44,8 @@ export function GlobalNav() {
   return (
     <header className="sticky top-0 z-30 h-16 border-b border-ink-100 bg-surface">
       <div className="mx-auto flex h-full max-w-[1200px] items-center gap-6 px-6">
-        <Link href="/home" className="text-h2 font-bold tracking-tight text-brand-600">
-          UNIROAD
+        <Link href="/home" aria-label="UNIROAD 홈" className="shrink-0">
+          <Logo priority className="h-6" />
         </Link>
 
         <nav aria-label="주요 메뉴" className="hidden items-center gap-1 md:flex">

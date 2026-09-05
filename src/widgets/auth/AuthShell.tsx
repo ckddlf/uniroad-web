@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react';
 import Link from 'next/link';
 
+import { Logo } from '@/shared/ui/Logo';
+
 export interface AuthShellProps {
   title: string;
   description?: string;
@@ -13,8 +15,8 @@ export interface AuthShellProps {
 export function AuthShell({ title, description, progress, children }: AuthShellProps) {
   return (
     <main className="mx-auto flex min-h-dvh w-full max-w-md flex-col justify-center px-6 py-12">
-      <Link href="/" className="mb-8 self-start text-h2 font-bold tracking-tight text-brand-600">
-        UNIROAD
+      <Link href="/" aria-label="UNIROAD 홈" className="mb-8 self-start">
+        <Logo className="h-6" />
       </Link>
 
       {progress}
