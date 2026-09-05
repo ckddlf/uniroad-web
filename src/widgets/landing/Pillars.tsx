@@ -1,6 +1,6 @@
 import { ListChecks, ShoppingBag, Users } from 'lucide-react';
 
-import { Card, IconTile, Section, SectionHeading } from './Section';
+import { Card, IconTile, Section, SectionHeading, ThreeUp } from './Section';
 
 const PILLARS = [
   {
@@ -29,7 +29,7 @@ export function Pillars() {
     <Section tone="surface">
       <SectionHeading eyebrow="What UNIROAD does" title="교환학생만을 위한 통합 서비스" />
 
-      <div className="mt-12 grid gap-5 sm:mt-14 md:grid-cols-3">
+      <ThreeUp className="mt-12 sm:mt-14">
         {PILLARS.map(({ icon: Icon, title, items }, index) => (
           <Card key={title} tone="canvas" className="flex flex-col gap-4">
             <div className="flex items-center justify-between gap-3">
@@ -53,7 +53,7 @@ export function Pillars() {
             </ul>
           </Card>
         ))}
-      </div>
+      </ThreeUp>
     </Section>
   );
 }

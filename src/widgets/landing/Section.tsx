@@ -95,6 +95,22 @@ export function Card({
   );
 }
 
+/**
+ * 세 항목을 나란히 놓는 그리드.
+ *
+ * 세 칸의 폭을 `minmax(0, 1fr)`로 고정해(= `grid-cols-3`) 항목 안의 긴 낱말이 한 칸만
+ * 넓히지 못하게 하고, 그래야 가운데 항목이 어떤 화면에서도 섹션 정중앙에 온다.
+ * 열 전환 폭(md)과 간격을 이 한 곳에서 정해, 3분할 섹션끼리 같은 지점에서 같은 간격으로
+ * 접히게 한다. md 아래에서 세 칸으로 쥐어짜면 칸이 170px까지 줄어 글이 뭉치므로 쌓는다.
+ */
+export function ThreeUp({ className, children }: { className?: string; children: ReactNode }) {
+  return (
+    <div className={cn('grid grid-cols-1 gap-10 md:grid-cols-3 md:gap-8 [&>*]:min-w-0', className)}>
+      {children}
+    </div>
+  );
+}
+
 /** 아이콘을 담는 정사각 타일. 랜딩 전체에서 아이콘 크기·배경을 통일한다. */
 export function IconTile({ children }: { children: ReactNode }) {
   return (

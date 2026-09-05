@@ -32,7 +32,7 @@ export function HowItWorks() {
         description="가입하고 바로 둘러볼 수 있고, 돈과 만남이 오가는 기능만 인증 뒤에 열립니다."
       />
 
-      <ol className="mt-12 grid gap-10 sm:mt-14 sm:grid-cols-2 sm:gap-x-8 lg:grid-cols-4">
+      <ol className="mt-12 grid gap-10 sm:mt-14 md:grid-cols-2 md:gap-x-8 lg:grid-cols-4">
         {STEPS.map((step, index) => (
           <li key={step.title} className="flex flex-col gap-3">
             <div className="flex items-center gap-3">

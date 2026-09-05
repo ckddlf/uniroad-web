@@ -1,6 +1,6 @@
 import { Search, ShieldAlert, Users } from 'lucide-react';
 
-import { IconTile, Section, SectionHeading } from './Section';
+import { IconTile, Section, SectionHeading, ThreeUp } from './Section';
 
 const PAIN_POINTS = [
   {
@@ -35,9 +35,10 @@ export function PainPoints() {
         }
       />
 
-      <div className="mt-14 grid gap-10 sm:mt-16 sm:grid-cols-3 sm:grid-rows-[auto_auto_auto] sm:gap-8">
+      {/* subgrid로 세 항목의 아이콘·제목·설명 줄을 같은 높이에 맞춘다 */}
+      <ThreeUp className="mt-14 sm:mt-16 md:grid-rows-[auto_auto_auto]">
         {PAIN_POINTS.map(({ icon: Icon, title, description }) => (
-          <div key={title} className="flex flex-col gap-4 sm:row-span-3 sm:grid sm:grid-rows-subgrid">
+          <div key={title} className="flex flex-col gap-4 md:row-span-3 md:grid md:grid-rows-subgrid">
             <IconTile>
               <Icon aria-hidden className="size-5" />
             </IconTile>
@@ -45,7 +46,7 @@ export function PainPoints() {
             <p className="text-body text-ink-500">{description}</p>
           </div>
         ))}
-      </div>
+      </ThreeUp>
     </Section>
   );
 }
