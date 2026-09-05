@@ -7,9 +7,8 @@ import { buttonClass } from '@/shared/ui/Button';
  * 헤더는 /notices·/terms에서도 쓰이므로 루트 기준(`/#…`) 으로 둔다.
  */
 const ANCHORS = [
-  { href: '/#features', label: '기능' },
+  { href: '/#features', label: '기능 소개' },
   { href: '/#how', label: '이용 방법' },
-  { href: '/#why', label: '왜 UNIROAD' },
   { href: '/#faq', label: '자주 묻는 질문' },
   { href: '/blog', label: '블로그' },
 ];
