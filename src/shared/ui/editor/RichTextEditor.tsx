@@ -6,6 +6,7 @@ import { EditorContent, useEditor } from '@tiptap/react';
 
 import { useS3Upload } from '@/shared/hooks/useS3Upload';
 import { cn } from '@/shared/lib/cn';
+import { readImageSize } from '@/shared/lib/image';
 import { useToast } from '@/shared/ui/Toast';
 import type { BlogContentJson } from '@/shared/api/types';
 
@@ -65,18 +66,26 @@ export function RichTextEditor({
       if (!editor || files.length === 0) return;
 
       try {
-        const uploaded = await uploadFiles(files);
+        // 업로드와 나란히 크기를 읽어둔다. width/height가 있어야 이미지가 늦게 와도 글이 밀리지 않는다.
+        const [uploaded, sizes] = await Promise.all([
+          uploadFiles(files),
+          Promise.all(files.map((file) => readImageSize(file))),
+        ]);
         const chain = editor.chain().focus();
 
-        uploaded.forEach((file) => {
+        uploaded.forEach((file, index) => {
           if (!file.fileUrl) return;
+          const size = sizes[index];
+          const attrs = {
+            src: file.fileUrl,
+            alt: file.fileName,
+            ...(size ? { width: size.width, height: size.height } : {}),
+          };
+
           if (pos === undefined) {
-            chain.setImage({ src: file.fileUrl, alt: file.fileName });
+            chain.setImage(attrs);
           } else {
-            chain.insertContentAt(pos, {
-              type: 'image',
-              attrs: { src: file.fileUrl, alt: file.fileName },
-            });
+            chain.insertContentAt(pos, { type: 'image', attrs });
           }
         });
 

@@ -21,6 +21,21 @@ export const HIGHLIGHT_COLORS = [
 
 export type HighlightColor = (typeof HIGHLIGHT_COLORS)[number]['value'];
 
+/**
+ * 기본 Image 확장은 width/height를 들고 있지 않아 저장할 때 떨어져 나간다.
+ * 이 두 값이 없으면 브라우저가 이미지 자리를 미리 잡지 못해 로딩 중에 글이 밀린다(CLS).
+ * 서버 소독기도 두 속성을 허용하고 있으므로 끝까지 살아남는다.
+ */
+const SizedImage = Image.extend({
+  addAttributes() {
+    return {
+      ...this.parent?.(),
+      width: { default: null },
+      height: { default: null },
+    };
+  },
+});
+
 const DataColorHighlight = Highlight.extend({
   renderHTML({ HTMLAttributes }) {
     const color = HTMLAttributes['data-color'] ?? HTMLAttributes.color;
@@ -41,14 +56,11 @@ export function buildExtensions({ placeholder }: BuildExtensionsOptions = {}): E
     StarterKit.configure({
       // 본문 최상위 제목은 페이지의 h1(글 제목)이므로 본문은 h2부터 쓴다
       heading: { levels: [2, 3, 4] },
-      link: {
-        openOnClick: false,
-        autolink: true,
-        HTMLAttributes: { rel: 'nofollow noopener noreferrer', target: '_blank' },
-      },
+      // rel·target은 서버가 붙인다. 내부 링크인지 외부 링크인지는 도메인을 아는 쪽이 판단해야 한다.
+      link: { openOnClick: false, autolink: true },
     }),
     DataColorHighlight.configure({ multicolor: true }),
-    Image.configure({
+    SizedImage.configure({
       inline: false,
       allowBase64: false,
       HTMLAttributes: { class: 'blog-content-image' },

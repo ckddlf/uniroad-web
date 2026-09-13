@@ -34,7 +34,12 @@ export function BlogArticle({ post, actions, className }: BlogArticleProps) {
         </h1>
 
         <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-caption text-ink-500">
-          <span>{date === null ? '아직 공개 전' : formatDate(date, 'yyyy년 M월 d일')}</span>
+          {/* 크롤러가 발행일을 추측하지 않고 읽게 한다 — 사람이 읽는 형식과 기계가 읽는 값을 따로 싣는다 */}
+          {date === null ? (
+            <span>아직 공개 전</span>
+          ) : (
+            <time dateTime={date}>{formatDate(date, 'yyyy년 M월 d일')}</time>
+          )}
           {post.authorNickname && <span>· {post.authorNickname}</span>}
           {typeof post.viewCount === 'number' && <span>· 조회 {post.viewCount}</span>}
         </div>

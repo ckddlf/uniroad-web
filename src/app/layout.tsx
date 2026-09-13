@@ -1,9 +1,16 @@
 import type { Metadata, Viewport } from 'next';
 
+import { organizationSchema, websiteSchema } from '@/shared/lib/jsonLd';
+import { SITE_NAME, SITE_URL } from '@/shared/lib/site';
+import { JsonLd } from '@/shared/ui';
+
 import { Providers } from './providers';
 import './globals.css';
 
 export const metadata: Metadata = {
+  // 상대 경로로 적은 canonical·OG 이미지를 절대 URL로 올려주는 기준점.
+  // 이게 없으면 공유 미리보기의 이미지가 비어 보인다.
+  metadataBase: new URL(SITE_URL),
   title: {
     default: 'UNIROAD — 교환학생 준비부터 현지 생활까지',
     template: '%s | UNIROAD',
@@ -13,12 +20,23 @@ export const metadata: Metadata = {
   applicationName: 'UNIROAD',
   openGraph: {
     type: 'website',
-    siteName: 'UNIROAD',
+    siteName: SITE_NAME,
     locale: 'ko_KR',
+    url: '/',
     title: 'UNIROAD — 교환학생 준비부터 현지 생활까지',
     description:
       '파견 준비 일정, 제출 서류 체크리스트, 현지 중고거래와 동행 구하기까지 UNIROAD 하나로.',
+    images: ['/logo-uniroad.png'],
   },
+  // OG만으로는 X에서 작은 썸네일이 뜬다. 큰 카드로 뜨게 하려면 이 값이 필요하다.
+  twitter: {
+    card: 'summary_large_image',
+    title: 'UNIROAD — 교환학생 준비부터 현지 생활까지',
+    description:
+      '파견 준비 일정, 제출 서류 체크리스트, 현지 중고거래와 동행 구하기까지 UNIROAD 하나로.',
+    images: ['/logo-uniroad.png'],
+  },
+  alternates: { canonical: '/' },
 };
 
 export const viewport: Viewport = {
@@ -39,6 +57,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="stylesheet" href="/fonts/pretendard/pretendard.css" />
       </head>
       <body className="min-h-dvh bg-canvas text-ink-900 antialiased">
+        <JsonLd data={organizationSchema()} />
+        <JsonLd data={websiteSchema()} />
         <Providers>{children}</Providers>
       </body>
     </html>

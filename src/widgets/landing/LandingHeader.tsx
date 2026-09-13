@@ -4,13 +4,13 @@ import { buttonClass } from '@/shared/ui/Button';
 import { Logo } from '@/shared/ui/Logo';
 
 /**
- * 랜딩 섹션으로 가는 앵커.
- * 헤더는 /notices·/terms에서도 쓰이므로 루트 기준(`/#…`) 으로 둔다.
+ * 상단 내비게이션 링크.
+ * 헤더는 /notices·/terms에서도 쓰이므로 섹션 앵커는 루트 기준(`/#…`) 으로 둔다.
  */
 const ANCHORS = [
   { href: '/#features', label: '기능 소개' },
   { href: '/#how', label: '이용 방법' },
-  { href: '/#faq', label: 'FAQ' },
+  { href: '/faq', label: 'FAQ' },
   { href: '/blog', label: '블로그' },
 ];
 

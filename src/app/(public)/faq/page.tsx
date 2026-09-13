@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 
+import { FAQ_ITEMS } from '@/entities/faq/items';
+import { faqSchema } from '@/shared/lib/jsonLd';
+import { JsonLd } from '@/shared/ui';
 import { FaqList } from '@/widgets/landing/FaqList';
 import { LandingFooter } from '@/widgets/landing/LandingFooter';
 import { LandingHeader } from '@/widgets/landing/LandingHeader';
@@ -13,6 +16,8 @@ export const metadata: Metadata = {
 export default function FaqPage() {
   return (
     <>
+      {/* 질문·답변을 그대로 알려주면 검색결과에 아코디언으로 펼쳐진다 */}
+      <JsonLd data={faqSchema(FAQ_ITEMS)} />
       <LandingHeader />
 
       <main className="mx-auto w-full max-w-3xl flex-1 break-keep px-6 py-16">

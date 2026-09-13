@@ -583,6 +583,13 @@ export interface BlogPostRequest {
   thumbnailUrl: string;
   contentJson: BlogContentJson;
   contentHtml: string;
+  /* 검색 노출 — 비워 보내면 서버가 화면용 값으로 대신 채워 내려준다 */
+  metaTitle: string;
+  metaDescription: string;
+  ogImageUrl: string;
+  tags: string[];
+  canonicalUrl: string;
+  noindex: boolean;
   published: boolean;
 }
 
@@ -600,12 +607,29 @@ export interface BlogPostSummaryResponse {
   viewCount: number;
   likeCount: number;
   likedByMe: boolean;
+  /** sitemap이 색인 제외 글을 걸러내는 데 쓴다 */
+  noindex: boolean;
 }
 
+/**
+ * SEO 값은 두 벌로 내려온다.
+ * - metaTitle 등        : 작성자가 직접 적은 것. 비웠으면 null. 수정 화면이 편집하는 값이다.
+ * - effectiveMetaTitle 등: 비었을 때 화면용 값으로 채운 결과. 페이지는 이쪽만 본다.
+ */
 export interface BlogPostDetailResponse extends BlogPostSummaryResponse {
   contentHtml: string;
   /** 관리자 수정 화면에서만 채워진다 */
   contentJson: BlogContentJson | null;
+
+  metaTitle: string | null;
+  metaDescription: string | null;
+  ogImageUrl: string | null;
+  tags: string[];
+  canonicalUrl: string | null;
+
+  effectiveMetaTitle: string | null;
+  effectiveMetaDescription: string | null;
+  effectiveOgImageUrl: string | null;
 }
 
 export interface BlogPostLikeResponse {

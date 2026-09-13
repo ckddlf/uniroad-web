@@ -41,3 +41,38 @@ export async function resizeImage(file: File, maxEdge = MAX_IMAGE_EDGE): Promise
     return file;
   }
 }
+
+export interface ImageSize {
+  width: number;
+  height: number;
+}
+
+/**
+ * 업로드된 뒤의 이미지 크기를 읽는다.
+ *
+ * 본문 img에 width/height를 실어두면 브라우저가 내려받기 전에 자리를 비워둘 수 있어
+ * 로딩 중 글이 밀리지 않는다(CLS). 이 밀림은 Core Web Vitals로 검색 순위에 반영된다.
+ *
+ * resizeImage와 같은 규칙으로 긴 변을 줄여서 돌려준다. 실제로 올라가는 것은 축소본이므로
+ * 원본 크기를 그대로 실으면 저장된 파일과 속성이 어긋난다.
+ * 크기를 못 읽는 형식이면 null을 주고, 부르는 쪽은 속성 없이 진행한다.
+ */
+export async function readImageSize(file: File, maxEdge = MAX_IMAGE_EDGE): Promise<ImageSize | null> {
+  if (!file.type.startsWith('image/')) return null;
+
+  try {
+    const bitmap = await createImageBitmap(file);
+    const { width, height } = bitmap;
+    bitmap.close();
+
+    const longestEdge = Math.max(width, height);
+    if (longestEdge <= maxEdge) {
+      return { width, height };
+    }
+
+    const scale = maxEdge / longestEdge;
+    return { width: Math.round(width * scale), height: Math.round(height * scale) };
+  } catch {
+    return null;
+  }
+}
