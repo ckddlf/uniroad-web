@@ -15,3 +15,42 @@ export const SITE_NAME = 'UNIROAD';
 export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;
 }
+
+/** 루트 레이아웃이 깔아두는 값 — 페이지가 openGraph를 다시 쓸 때 같이 실어야 한다 */
+export const OG_DEFAULTS = {
+  siteName: SITE_NAME,
+  locale: 'ko_KR',
+} as const;
+
+export interface ShareImage {
+  url: string;
+  width: number;
+  height: number;
+}
+
+/**
+ * app/opengraph-image.tsx가 만드는 기본 공유 이미지.
+ *
+ * Next가 루트 페이지에는 이 파일을 알아서 물려주지만, openGraph를 스스로 정의한 페이지에는
+ * 물려주지 않는다(파일 기반 이미지는 그 파일이 놓인 세그먼트에서만 채워진다).
+ * 그래서 그런 페이지에서는 주소를 직접 가리킨다. 실제 태그에는 캐시 무효화용 해시가 붙지만
+ * 해시 없는 주소도 같은 이미지를 낸다.
+ */
+const DEFAULT_SHARE_IMAGE: ShareImage = {
+  url: '/opengraph-image',
+  width: 1200,
+  height: 630,
+};
+
+/**
+ * 공유 이미지 칸을 만든다.
+ *
+ * 페이지가 openGraph를 정의하면 루트의 것이 통째로 교체되므로, 이미지가 없는 글은
+ * 여기서 기본 이미지를 채워 넣어야 공유 미리보기가 빈 카드로 뜨지 않는다.
+ */
+export function shareImages(url: string | null | undefined): { images: ShareImage[] } {
+  if (url === null || url === undefined || url === '') {
+    return { images: [DEFAULT_SHARE_IMAGE] };
+  }
+  return { images: [{ url, width: 1200, height: 630 }] };
+}

@@ -11,6 +11,7 @@ import { useToast } from '@/shared/ui/Toast';
 import type { BlogContentJson } from '@/shared/api/types';
 
 import { EditorToolbar } from './EditorToolbar';
+import { ImageAltField } from './ImageAltField';
 import { buildExtensions } from './extensions';
 
 export interface RichTextEditorProps {
@@ -125,6 +126,7 @@ export function RichTextEditor({
         uploading={uploading}
         onPickImage={(file) => void insertImages([file])}
       />
+      <ImageAltField editor={editor} />
       <EditorContent editor={editor} />
       {uploading && (
         <p className="border-t border-ink-100 px-4 py-2 text-caption text-ink-500">

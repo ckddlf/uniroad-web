@@ -7,6 +7,7 @@ import { endpoints } from '@/shared/api/endpoints';
 import { fetchPublic } from '@/shared/api/server';
 import type { NoticeResponse } from '@/shared/api/types';
 import { formatDate } from '@/shared/lib/date';
+import { OG_DEFAULTS, shareImages } from '@/shared/lib/site';
 import { LandingFooter } from '@/widgets/landing/LandingFooter';
 import { LandingHeader } from '@/widgets/landing/LandingHeader';
 
@@ -21,11 +22,43 @@ async function loadNotice(noticeId: string): Promise<NoticeResponse | null> {
   return fetchPublic<NoticeResponse>(endpoints.notice.detail(id), 60);
 }
 
+/** 블로그와 같은 이유로 미리 구워둔다 */
+export async function generateStaticParams() {
+  const notices = await fetchPublic<NoticeResponse[]>(endpoints.notice.list, 3600);
+  return (notices ?? []).map((notice) => ({ noticeId: String(notice.id) }));
+}
+
+/** 공지 본문에는 태그가 섞여 있다. 설명에 <p>가 그대로 나가면 검색결과에 태그가 보인다. */
+function toDescription(content: string): string {
+  const text = content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  return text.length <= 120 ? text : `${text.slice(0, 120).trimEnd()}…`;
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { noticeId } = await params;
   const notice = await loadNotice(noticeId);
 
-  return notice ? { title: notice.title, description: notice.content.slice(0, 120) } : { title: '공지사항' };
+  if (notice === null) {
+    return { title: '공지사항', robots: { index: false, follow: true } };
+  }
+
+  const description = toDescription(notice.content);
+
+  return {
+    title: notice.title,
+    description,
+    alternates: { canonical: `/notices/${notice.id}` },
+    openGraph: {
+      ...OG_DEFAULTS,
+      type: 'article',
+      title: notice.title,
+      description,
+      url: `/notices/${notice.id}`,
+      publishedTime: notice.createdAt,
+      modifiedTime: notice.updatedAt,
+      ...shareImages(null),
+    },
+  };
 }
 
 export default async function NoticeDetailPage({ params }: PageProps) {

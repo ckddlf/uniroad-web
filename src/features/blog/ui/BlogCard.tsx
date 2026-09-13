@@ -39,6 +39,10 @@ export function BlogCard({ post, href, className }: BlogCardProps) {
             src={post.thumbnailUrl}
             alt=""
             loading="lazy"
+            /* 감싼 상자가 aspect-[16/10]으로 자리를 잡지만, 이미지 자체에도 비율을 알려야
+               CSS가 오기 전이나 상자가 무너진 경우에 글이 밀리지 않는다(CLS) */
+            width={1600}
+            height={1000}
             className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
           />
         ) : (
