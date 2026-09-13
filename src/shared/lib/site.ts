@@ -3,8 +3,12 @@
  *
  * Next는 metadataBase 없이는 상대 경로를 절대 URL로 올려주지 못한다.
  * 그러면 og:image가 `/logo.png` 그대로 나가 카카오톡·슬랙에서 썸네일이 비어 보인다.
+ *
+ * www가 붙은 쪽이 실제로 서비스되는 주소다. apex(uniroad.kr)는 여기로 308을 보내기만 한다.
+ * 기본값을 apex로 두면 환경 변수를 빠뜨린 배포에서 canonical이 "리다이렉트되는 주소"를
+ * 원본이라고 선언하게 되고, sitemap의 모든 주소도 한 번씩 튕긴다.
  */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://uniroad.kr').replace(
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.uniroad.kr').replace(
   /\/+$/,
   '',
 );
