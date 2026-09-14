@@ -1,13 +1,15 @@
 'use client';
 
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { ImagePlus, Trash2 } from 'lucide-react';
+import { Eye, ImagePlus, Trash2 } from 'lucide-react';
 
 import { toErrorMessage } from '@/shared/api/errors';
 import type { BlogContentJson, BlogPostDetailResponse } from '@/shared/api/types';
 import { useS3Upload } from '@/shared/hooks/useS3Upload';
 import { cn } from '@/shared/lib/cn';
+import { formatDate } from '@/shared/lib/date';
+import { readJson, removeKey, writeJson } from '@/shared/lib/storage';
 import { Button, Field, Input, TagInput, Textarea, Toggle, useToast } from '@/shared/ui';
 import { RichTextEditor } from '@/shared/ui/editor/RichTextEditor';
 
@@ -18,6 +20,32 @@ import { SerpPreview } from './SerpPreview';
 const SUMMARY_LENGTH = 150;
 const META_TITLE_LENGTH = 60;
 const META_DESCRIPTION_LENGTH = 160;
+
+/**
+ * 쓰던 글을 브라우저에 임시로 담아 두는 자리.
+ *
+ * 글 하나에 한 시간씩 들어가는데 실수로 탭을 닫거나 세션이 끊기면 전부 사라진다.
+ * 저장 버튼을 누르기 전까지는 서버에 아무것도 없으므로, 그 사이를 브라우저가 메운다.
+ * 수정 화면에서는 쓰지 않는다 — 서버에 있는 원본이 언제나 우선이다.
+ */
+const DRAFT_KEY = 'uniroad.blogDraft';
+const AUTOSAVE_INTERVAL = 15_000;
+
+interface BlogDraft {
+  title: string;
+  slug: string;
+  summary: string;
+  thumbnailUrl: string;
+  contentJson: BlogContentJson;
+  contentHtml: string;
+  metaTitle: string;
+  metaDescription: string;
+  ogImageUrl: string;
+  tags: string[];
+  canonicalUrl: string;
+  noindex: boolean;
+  savedAt: string;
+}
 
 export interface BlogPostFormProps {
   /** 수정일 때만 넘어온다 */
@@ -87,6 +115,15 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
   const [canonicalUrl, setCanonicalUrl] = useState(post?.canonicalUrl ?? '');
   const [noindex, setNoindex] = useState(post?.noindex ?? false);
 
+  /* 임시저장 — 새 글에서만 쓴다 */
+  const [draft, setDraft] = useState<BlogDraft | null>(null);
+  const [savedAt, setSavedAt] = useState<string | null>(null);
+  /** 임시저장을 불러오면 에디터를 새로 그려야 내용이 들어간다 (한 번 채운 뒤에는 덮어쓰지 않으므로) */
+  const [editorSeed, setEditorSeed] = useState<BlogContentJson | null>(post?.contentJson ?? null);
+  const [editorKey, setEditorKey] = useState(0);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const submittedRef = useRef(false);
+
   const saving = create.isPending || update.isPending;
   const bodyImages = useMemo(() => imageUrlsIn(contentHtml), [contentHtml]);
   const plainText = useMemo(() => plainTextIn(contentHtml), [contentHtml]);
@@ -106,6 +143,81 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
   const effectiveMetaDescription =
     metaDescription.trim() !== '' ? metaDescription.trim() : effectiveSummary;
   const effectiveOgImage = ogImageUrl !== '' ? ogImageUrl : effectiveThumbnail;
+
+  // 쓰던 글이 남아 있으면 먼저 물어본다 (수정 화면에서는 원본이 우선이라 건너뛴다)
+  useEffect(() => {
+    if (post) return;
+    const saved = readJson<BlogDraft>(DRAFT_KEY);
+    if (saved && (saved.title !== '' || saved.contentHtml !== '')) setDraft(saved);
+  }, [post]);
+
+  /* 타자 한 번마다 타이머를 다시 걸면 쉬지 않고 쓰는 동안에는 한 번도 저장되지 않는다.
+     최신 값만 여기에 담아 두고, 타이머는 처음 한 번만 건다. */
+  const latestRef = useRef<Omit<BlogDraft, 'savedAt'>>(null);
+  useEffect(() => {
+    latestRef.current = {
+      title,
+      slug,
+      summary,
+      thumbnailUrl,
+      contentJson,
+      contentHtml,
+      metaTitle,
+      metaDescription,
+      ogImageUrl,
+      tags,
+      canonicalUrl,
+      noindex,
+    };
+  });
+
+  // 일정 간격으로 담아 둔다. 값이 바뀔 때마다 쓰면 타이핑 중에 저장소를 계속 두드리게 된다.
+  useEffect(() => {
+    if (post) return;
+
+    const timer = window.setInterval(() => {
+      const latest = latestRef.current;
+      if (latest === null || (latest.title === '' && latest.contentHtml === '')) return;
+
+      const now = new Date().toISOString();
+      writeJson(DRAFT_KEY, { ...latest, savedAt: now } satisfies BlogDraft);
+      setSavedAt(now);
+    }, AUTOSAVE_INTERVAL);
+
+    return () => window.clearInterval(timer);
+  }, [post]);
+
+  // 저장하지 않은 채 창을 닫으려 하면 브라우저 기본 확인창을 띄운다
+  useEffect(() => {
+    const handler = (event: BeforeUnloadEvent) => {
+      if (submittedRef.current) return;
+      if (title === '' && contentHtml === '') return;
+      event.preventDefault();
+    };
+
+    window.addEventListener('beforeunload', handler);
+    return () => window.removeEventListener('beforeunload', handler);
+  }, [title, contentHtml]);
+
+  /** 담아 둔 내용을 화면에 올린다 */
+  const restoreDraft = (saved: BlogDraft) => {
+    setTitle(saved.title);
+    setSlug(saved.slug);
+    setSummary(saved.summary);
+    setThumbnailUrl(saved.thumbnailUrl);
+    setContentJson(saved.contentJson);
+    setContentHtml(saved.contentHtml);
+    setMetaTitle(saved.metaTitle);
+    setMetaDescription(saved.metaDescription);
+    setOgImageUrl(saved.ogImageUrl);
+    setTags(saved.tags);
+    setCanonicalUrl(saved.canonicalUrl);
+    setNoindex(saved.noindex);
+    setEditorSeed(saved.contentJson);
+    setEditorKey((key) => key + 1);
+    setSavedAt(saved.savedAt);
+    setDraft(null);
+  };
 
   /** 카드 이미지와 공유 이미지가 같은 절차를 쓴다 — 올린 주소를 받아 넣을 곳만 다르다 */
   const uploadImage = async (file: File, apply: (url: string) => void) => {
@@ -150,6 +262,7 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
         { postId: post.id, ...body },
         {
           onSuccess: () => {
+            submittedRef.current = true;
             toast.success('글을 수정했어요.');
             router.push('/admin/blog');
           },
@@ -161,6 +274,9 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
 
     create.mutate(body, {
       onSuccess: () => {
+        submittedRef.current = true;
+        // 서버에 올라갔으니 브라우저에 담아 둔 것은 지운다 — 다음에 또 물어보면 혼란스럽다
+        removeKey(DRAFT_KEY);
         toast.success(published ? '글을 공개했어요.' : '초안으로 저장했어요.');
         router.push('/admin/blog');
       },
@@ -169,8 +285,10 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
   };
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
+    /* 글 쓰는 동안에는 화면 전체를 쓴다. 관리자 사이드바와 페이지 여백까지 본문에 내주고,
+       나가는 길은 위쪽 [취소]·[저장]이 맡는다. */
+    <div className="fixed inset-0 z-40 flex flex-col bg-canvas">
+      <header className="flex shrink-0 flex-wrap items-center justify-between gap-3 border-b border-ink-100 bg-surface px-4 py-3 sm:px-6">
         <h1 className="text-h1 text-ink-900">{post ? '글 수정' : '새 글 쓰기'}</h1>
 
         <div className="flex items-center gap-3">
@@ -179,6 +297,13 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
             onChange={setPublished}
             label={published ? '공개' : '초안'}
           />
+          <Button
+            variant="secondary"
+            leftIcon={<Eye aria-hidden className="size-4" />}
+            onClick={() => setPreviewOpen(true)}
+          >
+            미리보기
+          </Button>
           <Button variant="secondary" onClick={() => router.push('/admin/blog')} disabled={saving}>
             취소
           </Button>
@@ -186,11 +311,39 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
             저장
           </Button>
         </div>
-      </div>
+      </header>
 
-      {/* 왼쪽 편집 · 오른쪽 미리보기. 좁은 화면에서는 위아래로 쌓인다. */}
-      <div className="grid min-h-0 gap-6 xl:grid-cols-2">
-        <div className="flex min-w-0 flex-col gap-5">
+      {/* 스크롤은 여기서만 — 위쪽 막대는 자리를 지킨다 */}
+      <div className="min-h-0 flex-1 overflow-y-auto px-4 py-5 scrollbar-thin sm:px-6">
+        <div className="mx-auto flex w-full max-w-[1100px] min-w-0 flex-col gap-5">
+          {draft && (
+            <div className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-ink-300 bg-canvas px-4 py-3">
+              <p className="text-body text-ink-700">
+                쓰다 만 글이 있어요.{' '}
+                <span className="text-ink-500">
+                  {formatDate(draft.savedAt, 'M월 d일 HH:mm')}에 담아 둔 내용입니다.
+                </span>
+              </p>
+              <div className="flex gap-2">
+                <Button size="sm" variant="secondary" onClick={() => restoreDraft(draft)}>
+                  이어서 쓰기
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => {
+                    removeKey(DRAFT_KEY);
+                    setDraft(null);
+                  }}
+                >
+                  지우기
+                </Button>
+              </div>
+            </div>
+          )}
+
+          {/* 미리보기를 옆에 붙여 두지 않는다 — 쓰는 칸이 좁아지고, 좁은 칸의 줄바꿈은 실제와 다르다.
+              볼 때만 [미리보기]로 화면 전체를 쓴다. */}
           <Field htmlFor="blog-title" label="제목" required>
             <Input
               id="blog-title"
@@ -218,8 +371,16 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
           <Field htmlFor="blog-content" label="본문" required>
             <div id="blog-content">
               <RichTextEditor
-                initialContent={post?.contentJson ?? null}
+                key={editorKey}
+                initialContent={editorSeed}
+                /* 위쪽 막대와 제목·주소 칸이 차지하는 만큼만 빼고 화면을 다 쓴다 */
+                className="h-[calc(100dvh-18rem)] min-h-[20rem]"
                 placeholder="내용을 입력하세요. 이미지는 끌어다 놓거나 붙여넣어도 됩니다."
+                statusNote={
+                  savedAt === null ? undefined : (
+                    <span>임시저장 {formatDate(savedAt, 'HH:mm')}</span>
+                  )
+                }
                 onChange={({ json, html }) => {
                   setContentJson(json);
                   setContentHtml(html);
@@ -489,20 +650,19 @@ export function BlogPostForm({ post }: BlogPostFormProps) {
             </details>
           </section>
         </div>
-
-        {/* 미리보기는 스크롤을 따라다녀야 편집하면서 계속 볼 수 있다 */}
-        <div className="min-w-0 xl:sticky xl:top-6 xl:h-[calc(100dvh-3rem)]">
-          <BlogPreviewPanel
-            title={title}
-            summary={effectiveSummary}
-            thumbnailUrl={effectiveThumbnail}
-            contentHtml={contentHtml}
-            authorNickname={post?.authorNickname ?? null}
-            publishedAt={published ? (post?.publishedAt ?? new Date().toISOString()) : null}
-            likeCount={post?.likeCount ?? 0}
-          />
-        </div>
       </div>
+
+      {previewOpen && (
+        <BlogPreviewPanel
+          onClose={() => setPreviewOpen(false)}
+          title={title}
+          summary={effectiveSummary}
+          thumbnailUrl={effectiveThumbnail}
+          contentHtml={contentHtml}
+          publishedAt={published ? (post?.publishedAt ?? new Date().toISOString()) : null}
+          likeCount={post?.likeCount ?? 0}
+        />
+      )}
     </div>
   );
 }

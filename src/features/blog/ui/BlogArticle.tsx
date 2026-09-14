@@ -1,10 +1,11 @@
 import { cn } from '@/shared/lib/cn';
 import { formatDate } from '@/shared/lib/date';
 
+import { BLOG_AUTHOR } from '../author';
+
 export interface BlogArticleData {
   title: string;
   contentHtml: string;
-  authorNickname: string | null;
   publishedAt: string | null;
   createdAt?: string | null;
   viewCount?: number;
@@ -40,7 +41,7 @@ export function BlogArticle({ post, actions, className }: BlogArticleProps) {
           ) : (
             <time dateTime={date}>{formatDate(date, 'yyyy년 M월 d일')}</time>
           )}
-          {post.authorNickname && <span>· {post.authorNickname}</span>}
+          <span>· {BLOG_AUTHOR}</span>
           {typeof post.viewCount === 'number' && <span>· 조회 {post.viewCount}</span>}
         </div>
 

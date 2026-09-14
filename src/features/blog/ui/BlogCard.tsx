@@ -4,6 +4,8 @@ import { Heart } from 'lucide-react';
 import { cn } from '@/shared/lib/cn';
 import { formatDate } from '@/shared/lib/date';
 
+import { BLOG_AUTHOR } from '../author';
+
 /**
  * 목록 카드가 필요로 하는 최소 정보.
  * 저장된 글(BlogPostSummaryResponse)과 아직 저장 전인 작성 폼 양쪽이 이 모양을 만들 수 있어서,
@@ -13,7 +15,6 @@ export interface BlogCardData {
   title: string;
   summary: string | null;
   thumbnailUrl: string | null;
-  authorNickname: string | null;
   publishedAt: string | null;
   createdAt?: string | null;
   likeCount: number;
@@ -63,8 +64,7 @@ export function BlogCard({ post, href, className }: BlogCardProps) {
 
         <div className="mt-auto flex items-center justify-between gap-3 pt-3">
           <p className="truncate text-caption text-ink-500">
-            {date === null ? '아직 공개 전' : formatDate(date, 'yyyy년 M월 d일')}
-            {post.authorNickname ? ` · ${post.authorNickname}` : ''}
+            {date === null ? '아직 공개 전' : formatDate(date, 'yyyy년 M월 d일')} · {BLOG_AUTHOR}
           </p>
 
           <span

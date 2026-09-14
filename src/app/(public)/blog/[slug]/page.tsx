@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 
+import { BLOG_AUTHOR } from '@/features/blog/author';
 import { BlogArticle } from '@/features/blog/ui/BlogArticle';
 import { BlogLikeButton } from '@/features/blog/ui/BlogLikeButton';
 import { endpoints } from '@/shared/api/endpoints';
@@ -92,7 +93,7 @@ export default async function BlogPostPage({ params }: PageProps) {
           description: post.effectiveMetaDescription ?? '',
           slug: post.slug,
           imageUrl: post.effectiveOgImageUrl,
-          authorName: post.authorNickname,
+          authorName: BLOG_AUTHOR,
           publishedAt: post.publishedAt,
           updatedAt: post.updatedAt,
           tags: post.tags,
