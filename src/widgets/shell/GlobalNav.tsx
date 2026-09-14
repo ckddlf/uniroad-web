@@ -76,6 +76,10 @@ export function GlobalNav() {
           <Link href="/chat" className={linkClass(isActive('/chat'))}>
             채팅
           </Link>
+          {/* 공개 페이지지만 로그인한 뒤에도 들어갈 길이 있어야 한다 */}
+          <Link href="/blog" className={linkClass(isActive('/blog'))}>
+            블로그
+          </Link>
         </nav>
 
         <div className="ml-auto flex items-center gap-1">

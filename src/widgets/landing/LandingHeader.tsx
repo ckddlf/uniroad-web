@@ -1,7 +1,8 @@
 import Link from 'next/link';
 
-import { buttonClass } from '@/shared/ui/Button';
 import { Logo } from '@/shared/ui/Logo';
+
+import { LandingHeaderActions } from './LandingHeaderActions';
 
 /**
  * 상단 내비게이션 링크.
@@ -34,23 +35,7 @@ export function LandingHeader() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
-          <Link
-            href="/notices"
-            className="hidden rounded-md px-3 py-2 text-body text-ink-700 transition-colors hover:bg-ink-100 hover:text-ink-900 sm:inline-flex"
-          >
-            공지사항
-          </Link>
-          <Link
-            href="/login"
-            className={buttonClass({ variant: 'ghost', className: 'hidden sm:inline-flex' })}
-          >
-            로그인
-          </Link>
-          <Link href="/signup" className={buttonClass()}>
-            바로 시작하기
-          </Link>
-        </div>
+        <LandingHeaderActions />
       </div>
     </header>
   );

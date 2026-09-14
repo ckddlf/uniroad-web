@@ -10,9 +10,22 @@ import type {
   BlogPostLikeResponse,
   BlogPostRequest,
   BlogPostSummaryResponse,
+  CursorPage,
 } from '@/shared/api/types';
 
 /* ─────────── 공개 ─────────── */
+
+/**
+ * 공개된 글 목록. 블로그 페이지 첫 화면은 서버에서 그리므로(검색 노출),
+ * 이 훅은 홈 위젯처럼 클라이언트에서 몇 개만 꺼내 보여줄 때 쓴다.
+ */
+export function useBlogPosts(size = 4) {
+  return useQuery({
+    queryKey: [...queryKeys.blog.list(), size],
+    queryFn: () => get<CursorPage<BlogPostSummaryResponse>>(endpoints.blog.list, { size }),
+    staleTime: 5 * 60 * 1000,
+  });
+}
 
 export function useBlogPost(slug: string, enabled = true) {
   return useQuery({
