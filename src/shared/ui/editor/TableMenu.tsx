@@ -7,6 +7,7 @@ import {
   ArrowLeftToLine,
   ArrowRightToLine,
   ArrowUpToLine,
+  Columns3,
   Combine,
   PaintBucket,
   Rows3,
@@ -24,11 +25,13 @@ function MenuButton({
   onClick,
   children,
   danger,
+  disabled,
 }: {
   label: string;
   onClick: () => void;
   children: React.ReactNode;
   danger?: boolean;
+  disabled?: boolean;
 }) {
   return (
     <button
@@ -36,8 +39,10 @@ function MenuButton({
       title={label}
       aria-label={label}
       onClick={onClick}
+      disabled={disabled}
       className={cn(
         'inline-flex size-8 shrink-0 items-center justify-center rounded-md transition-colors',
+        'disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-transparent',
         danger ? 'text-danger hover:bg-danger/10' : 'text-ink-700 hover:bg-surface',
       )}
     >
@@ -64,6 +69,11 @@ export function TableMenu({ editor }: { editor: Editor }) {
       border: (instance.getAttributes('table').borderStyle as TableBorder | undefined) ?? 'all',
       cellColor: (instance.getAttributes('tableCell').backgroundColor ??
         instance.getAttributes('tableHeader').backgroundColor) as string | undefined,
+      // 합치기·나누기는 고른 칸에 따라 되기도 안 되기도 한다 — 눌러 보고 아무 일도 없으면 고장으로 읽힌다
+      canMerge: instance.can().mergeCells(),
+      canSplit: instance.can().splitCell(),
+      canDeleteRow: instance.can().deleteRow(),
+      canDeleteColumn: instance.can().deleteColumn(),
     }),
   });
 
@@ -94,13 +104,30 @@ export function TableMenu({ editor }: { editor: Editor }) {
 
       <Divider />
 
-      <MenuButton label="머리행 켜고 끄기" onClick={() => editor.chain().focus().toggleHeaderRow().run()}>
+      <MenuButton
+        label="제목 행 켜고 끄기"
+        onClick={() => editor.chain().focus().toggleHeaderRow().run()}
+      >
         <Rows3 aria-hidden className="size-4" />
       </MenuButton>
-      <MenuButton label="칸 합치기" onClick={() => editor.chain().focus().mergeCells().run()}>
+      <MenuButton
+        label="제목 열 켜고 끄기"
+        onClick={() => editor.chain().focus().toggleHeaderColumn().run()}
+      >
+        <Columns3 aria-hidden className="size-4" />
+      </MenuButton>
+      <MenuButton
+        label="칸 합치기"
+        disabled={!state.canMerge}
+        onClick={() => editor.chain().focus().mergeCells().run()}
+      >
         <Combine aria-hidden className="size-4" />
       </MenuButton>
-      <MenuButton label="칸 나누기" onClick={() => editor.chain().focus().splitCell().run()}>
+      <MenuButton
+        label="칸 나누기"
+        disabled={!state.canSplit}
+        onClick={() => editor.chain().focus().splitCell().run()}
+      >
         <Split aria-hidden className="size-4" />
       </MenuButton>
 
@@ -142,10 +169,20 @@ export function TableMenu({ editor }: { editor: Editor }) {
 
       <Divider />
 
-      <MenuButton label="행 삭제" onClick={() => editor.chain().focus().deleteRow().run()} danger>
+      <MenuButton
+        label="행 삭제"
+        disabled={!state.canDeleteRow}
+        onClick={() => editor.chain().focus().deleteRow().run()}
+        danger
+      >
         <span className="text-caption font-medium">행−</span>
       </MenuButton>
-      <MenuButton label="열 삭제" onClick={() => editor.chain().focus().deleteColumn().run()} danger>
+      <MenuButton
+        label="열 삭제"
+        disabled={!state.canDeleteColumn}
+        onClick={() => editor.chain().focus().deleteColumn().run()}
+        danger
+      >
         <span className="text-caption font-medium">열−</span>
       </MenuButton>
       <MenuButton label="표 삭제" onClick={() => editor.chain().focus().deleteTable().run()} danger>

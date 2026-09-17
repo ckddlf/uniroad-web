@@ -24,7 +24,6 @@ import {
   Quote,
   Redo2,
   Strikethrough,
-  Table as TableIcon,
   Underline,
   Undo2,
 } from 'lucide-react';
@@ -32,6 +31,7 @@ import {
 import { cn } from '@/shared/lib/cn';
 
 import { ColorPicker } from './ColorPicker';
+import { TableSizePicker } from './TableSizePicker';
 import { FONT_SIZES, HIGHLIGHT_SWATCHES, TEXT_COLOR_SWATCHES } from './extensions';
 
 function ToolbarButton({
@@ -312,18 +312,11 @@ export function EditorToolbar({ editor, onPickImage, uploading }: EditorToolbarP
       <ToolbarButton label="링크" active={state?.link} onClick={setLink}>
         <Link2 aria-hidden className="size-4" />
       </ToolbarButton>
-      <ToolbarButton
-        label="표 넣기 (3×3)"
-        onClick={() =>
-          editor
-            .chain()
-            .focus()
-            .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
-            .run()
+      <TableSizePicker
+        onInsert={({ rows, cols, withHeaderRow }) =>
+          editor.chain().focus().insertTable({ rows, cols, withHeaderRow }).run()
         }
-      >
-        <TableIcon aria-hidden className="size-4" />
-      </ToolbarButton>
+      />
       <ToolbarButton
         label={uploading ? '이미지 올리는 중' : '이미지 넣기'}
         disabled={uploading}
