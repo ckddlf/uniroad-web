@@ -3,8 +3,18 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Bookmark, CalendarDays, ChevronLeft, MapPin, MessageCircle, Siren, Users } from 'lucide-react';
+import {
+  Bookmark,
+  CalendarDays,
+  ChevronLeft,
+  MapPin,
+  MessageCircle,
+  MessageSquare,
+  Siren,
+  Users,
+} from 'lucide-react';
 
+import { useCreateChatRoom } from '@/features/chat/api';
 import { isKakaoOpenChatLink, participantRatio, tripLength } from '@/entities/companion/trip';
 import { isApiError, toErrorMessage } from '@/shared/api/errors';
 import { COMPANION_STATUS } from '@/shared/lib/constants';
@@ -22,6 +32,7 @@ import {
   ReportModal,
   Skeleton,
   useToast,
+  VerifiedGate,
 } from '@/shared/ui';
 
 import {
@@ -41,6 +52,7 @@ export function CompanionDetailView({ postId }: { postId: number }) {
   const toggleScrap = useToggleCompanionScrap(postId);
   const complete = useCompleteCompanion(postId);
   const deletePost = useDeleteCompanion();
+  const createRoom = useCreateChatRoom();
 
   const [leaveOpen, setLeaveOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
@@ -78,6 +90,26 @@ export function CompanionDetailView({ postId }: { postId: number }) {
   const linkUsable = recruiting && isKakaoOpenChatLink(data.chatLink);
 
   const mine = myId !== undefined && data.memberId === myId;
+  // 작성자 ID를 안 내려주는 구버전 서버에서는 채팅을 걸 상대를 특정할 수 없다
+  const authorId = data.memberId;
+  const chattable = !mine && authorId !== undefined;
+
+  const startChat = async () => {
+    if (authorId === undefined) {
+      return;
+    }
+
+    try {
+      const room = await createRoom.mutateAsync({
+        referenceType: 'COMPANION',
+        referenceId: postId,
+        targetMemberId: authorId,
+      });
+      router.push(`/chat/${room.roomId}`);
+    } catch (error) {
+      toast.error(toErrorMessage(error));
+    }
+  };
 
   const finish = async () => {
     try {
@@ -159,9 +191,23 @@ export function CompanionDetailView({ postId }: { postId: number }) {
       </section>
 
       <div className="flex flex-col gap-3 border-y border-ink-100 py-5">
+        {chattable && (
+          <VerifiedGate>
+            <Button
+              size="lg"
+              loading={createRoom.isPending}
+              onClick={() => void startChat()}
+              leftIcon={<MessageSquare aria-hidden className="size-4" />}
+            >
+              작성자와 채팅하기
+            </Button>
+          </VerifiedGate>
+        )}
+
         {recruiting ? (
           <Button
             size="lg"
+            variant="secondary"
             disabled={!linkUsable}
             onClick={() => setLeaveOpen(true)}
             leftIcon={<MessageCircle aria-hidden className="size-4" />}

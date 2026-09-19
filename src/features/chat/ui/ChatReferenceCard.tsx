@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { Ticket as TicketIcon, ShoppingBag } from 'lucide-react';
+import { Ticket as TicketIcon, ShoppingBag, Users } from 'lucide-react';
 
+import { useCompanion } from '@/features/companion/api';
 import { useTicket } from '@/features/ticket/api';
 import { useUsedItem } from '@/features/market/api';
 import type { ChatRefType } from '@/shared/api/types';
@@ -17,6 +18,7 @@ export interface ChatReferenceCardProps {
 export function ChatReferenceCard({ referenceType, referenceId }: ChatReferenceCardProps) {
   const usedItem = useUsedItem(referenceType === 'TRADE' ? referenceId : 0);
   const ticket = useTicket(referenceType === 'TICKET' ? referenceId : 0);
+  const companion = useCompanion(referenceType === 'COMPANION' ? referenceId : 0);
 
   if (referenceType === 'TRADE') {
     return (
@@ -36,6 +38,21 @@ export function ChatReferenceCard({ referenceType, referenceId }: ChatReferenceC
         title={ticket.data?.title ?? '티켓 양도 글'}
         subtitle={ticket.data ? formatNumber(ticket.data.transferPrice) : undefined}
         href={`/tickets/${referenceId}`}
+      />
+    );
+  }
+
+  if (referenceType === 'COMPANION') {
+    return (
+      <ReferenceRow
+        icon={<Users aria-hidden className="size-4 text-ink-500" />}
+        title={companion.data?.title ?? '동행 구하기 글'}
+        subtitle={
+          companion.data
+            ? [companion.data.country, companion.data.region].filter(Boolean).join(' ')
+            : undefined
+        }
+        href={`/companions/${referenceId}`}
       />
     );
   }
