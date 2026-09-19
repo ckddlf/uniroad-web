@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { BlogCard } from '@/features/blog/ui/BlogCard';
+import { BlogListCards } from '@/features/blog/ui/BlogListCards';
 import { BlogMorePosts } from '@/features/blog/ui/BlogMorePosts';
 import { endpoints } from '@/shared/api/endpoints';
 import { fetchPublic } from '@/shared/api/server';
@@ -53,11 +53,7 @@ export default async function BlogPage() {
               <EmptyState title="아직 올라온 글이 없어요" description="첫 글을 준비하고 있어요." />
             ) : (
               <>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {posts.map((post) => (
-                    <BlogCard key={post.id} post={post} href={`/blog/${post.slug}`} />
-                  ))}
-                </div>
+                <BlogListCards posts={posts} />
 
                 {nextCursor !== null && <BlogMorePosts initialCursor={nextCursor} size={PAGE_SIZE} />}
               </>
