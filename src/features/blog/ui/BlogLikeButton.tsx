@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Heart } from 'lucide-react';
 
 import { toErrorMessage } from '@/shared/api/errors';
@@ -19,7 +18,6 @@ export interface BlogLikeButtonProps {
 }
 
 export function BlogLikeButton({ postId, slug, initialLiked, initialCount }: BlogLikeButtonProps) {
-  const router = useRouter();
   const toast = useToast();
   const phase = useAuthStore((state) => state.phase);
   const accessToken = useAuthStore((state) => state.accessToken);
@@ -48,12 +46,12 @@ export function BlogLikeButton({ postId, slug, initialLiked, initialCount }: Blo
 
   const toggle = () => {
     // 세션 복원이 끝나기 전에는 로그인 여부를 알 수 없다.
-    // 여기서 accessToken만 보면 로그인한 사람을 /login으로 튕긴다.
+    // 여기서 accessToken만 보면 로그인한 사람에게 "로그인이 필요해요"가 뜬다.
     if (phase !== 'ready') return;
 
+    // 읽으러 온 사람을 로그인 화면으로 끌고 가지 않는다 — 글을 읽던 자리에 그대로 둔다
     if (accessToken === null) {
       toast.error('로그인이 필요해요.');
-      router.push(`/login?redirectTo=${encodeURIComponent(`/blog/${slug}`)}`);
       return;
     }
 
