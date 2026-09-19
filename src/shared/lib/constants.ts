@@ -139,6 +139,7 @@ export const REPORT_STATUS: Record<ReportStatus, string> = {
 
 export const NOTIFICATION_TYPE: Record<NotificationType, string> = {
   CHAT: '채팅',
+  COMMENT: '댓글',
   MATCH: '동행',
   LIKE: '좋아요',
   NOTICE: '공지',

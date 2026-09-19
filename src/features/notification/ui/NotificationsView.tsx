@@ -31,7 +31,7 @@ import {
   type NotificationScope,
 } from '../api';
 
-const TYPES: NotificationType[] = ['CHAT', 'MATCH', 'LIKE', 'NOTICE', 'SYSTEM'];
+const TYPES: NotificationType[] = ['CHAT', 'COMMENT', 'MATCH', 'LIKE', 'NOTICE', 'SYSTEM'];
 
 export function NotificationsView() {
   const router = useRouter();

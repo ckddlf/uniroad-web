@@ -93,7 +93,7 @@ export type ReportReason = 'SPAM' | 'ABUSE' | 'FRAUD' | 'INAPPROPRIATE' | 'ETC';
 export type ReportStatus = 'PENDING' | 'IN_PROGRESS' | 'RESOLVED' | 'REJECTED';
 export type ChatRefType = 'TRADE' | 'TICKET' | 'MENTOR' | 'COMPANION';
 export type ChatMessageType = 'TALK' | 'ENTER' | 'QUIT';
-export type NotificationType = 'CHAT' | 'MATCH' | 'LIKE' | 'NOTICE' | 'SYSTEM';
+export type NotificationType = 'CHAT' | 'COMMENT' | 'MATCH' | 'LIKE' | 'NOTICE' | 'SYSTEM';
 
 /* ─────────── Auth ─────────── */
 export interface SignUpRequest {

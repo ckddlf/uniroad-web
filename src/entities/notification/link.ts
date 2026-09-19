@@ -2,7 +2,7 @@ import type { NotificationResponse } from '@/shared/api/types';
 
 /**
  * 알림 종류별 이동 경로.
- * 현재 서버가 실제로 만드는 알림은 CHAT과 NOTICE 두 가지뿐이고,
+ * 현재 서버가 실제로 만드는 알림은 CHAT·COMMENT·NOTICE 세 가지뿐이고,
  * 나머지는 enum에만 있어 추정으로 연결한다.
  */
 export function notificationHref(notification: NotificationResponse): string | null {
@@ -13,6 +13,9 @@ export function notificationHref(notification: NotificationResponse): string | n
       const roomId = notification.roomId ?? reference;
       return roomId ? `/chat/${roomId}` : null;
     }
+    case 'COMMENT':
+      // referenceId는 댓글이 달린 자유게시판 글 ID다
+      return reference ? `/community/${reference}` : null;
     case 'NOTICE':
       return reference ? `/notices/${reference}` : null;
     case 'LIKE':
