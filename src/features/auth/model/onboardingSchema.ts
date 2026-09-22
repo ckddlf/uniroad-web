@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import type { CurrentSituation, Gender, OnboardingRequest } from '@/shared/api/types';
+import type { CurrentSituation, OnboardingRequest } from '@/shared/api/types';
 import { nicknameSchema } from '@/shared/lib/validation';
 
 /**
@@ -10,10 +10,6 @@ import { nicknameSchema } from '@/shared/lib/validation';
 export const onboardingSchema = z.object({
   // 1단계
   nickname: nicknameSchema,
-  gender: z
-    .string()
-    .refine((value): value is Gender => value === 'MALE' || value === 'FEMALE', '성별을 선택해주세요.'),
-  birthYear: z.string(),
 
   // 2단계
   currentSituation: z
@@ -50,8 +46,6 @@ export type OnboardingFormValues = z.input<typeof onboardingSchema>;
 
 export const ONBOARDING_DEFAULTS: OnboardingFormValues = {
   nickname: '',
-  gender: '',
-  birthYear: '',
   currentSituation: '',
   domesticUniversity: '',
   dispatchUndecided: false,
@@ -68,7 +62,7 @@ export const ONBOARDING_DEFAULTS: OnboardingFormValues = {
 
 /** 단계별로 검증할 필드 */
 export const ONBOARDING_STEP_FIELDS = {
-  1: ['nickname', 'gender', 'birthYear'],
+  1: ['nickname'],
   2: ['currentSituation'],
   3: [
     'domesticUniversity',
@@ -100,10 +94,8 @@ export function toOnboardingRequest(values: OnboardingFormValues): OnboardingReq
 
   return {
     nickname: values.nickname.trim(),
-    gender: values.gender as Gender,
     currentSituation: situation,
     domesticUniversity: values.domesticUniversity.trim(),
-    birthYear: toNumber(values.birthYear),
     dispatchedUniversity: undecided ? undefined : trimmed(values.dispatchedUniversity),
     dispatchedCountry: undecided ? undefined : trimmed(values.dispatchedCountry),
     dispatchedRegion: undecided ? undefined : trimmed(values.dispatchedRegion),

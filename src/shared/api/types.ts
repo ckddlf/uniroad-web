@@ -123,10 +123,8 @@ export interface TokenResponse {
 
 export interface OnboardingRequest {
   nickname: string;
-  gender: Gender;
   currentSituation: CurrentSituation;
   domesticUniversity: string;
-  birthYear?: number;
   dispatchedUniversity?: string;
   dispatchedCountry?: string;
   dispatchedRegion?: string;

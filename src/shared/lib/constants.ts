@@ -3,7 +3,6 @@ import type {
   AccountType,
   CompanionStatus,
   CurrentSituation,
-  Gender,
   NotificationType,
   ReportReason,
   ReportStatus,
@@ -28,11 +27,6 @@ export const CURRENT_SITUATION_DESCRIPTION: Record<CurrentSituation, string> = {
   PREPARING_APPLICATION: '학교 선발 과정을 준비 중이에요',
   PREPARING_DEPARTURE: '합격 후 출국을 준비 중이에요',
   DISPATCHED: '현지에서 생활 중이에요',
-};
-
-export const GENDER: Record<Gender, string> = {
-  MALE: '남성',
-  FEMALE: '여성',
 };
 
 export const ROLE: Record<Role, string> = {
@@ -187,14 +181,6 @@ export const EUROPEAN_COUNTRIES = [
   '핀란드',
   '헝가리',
 ] as const;
-
-/**
- * 온보딩 출생 연도 선택지 (최근 연도부터).
- * 만 18~40세에 해당하는 범위이고, 벗어나는 경우 "직접 입력"으로 적는다.
- */
-export const BIRTH_YEAR_OPTIONS = Array.from({ length: 23 }, (_, index) =>
-  String(new Date().getFullYear() - 18 - index),
-);
 
 /** 커서 페이징 기본 크기 */
 export const DEFAULT_PAGE_SIZE = 10;
