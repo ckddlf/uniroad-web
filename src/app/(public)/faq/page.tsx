@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import { FAQ_ITEMS } from '@/entities/faq/items';
-import { faqSchema } from '@/shared/lib/jsonLd';
+import { breadcrumbSchema, faqSchema } from '@/shared/lib/jsonLd';
 import { pageMetadata } from '@/shared/lib/site';
 import { JsonLd } from '@/shared/ui';
 import { FaqList } from '@/widgets/landing/FaqList';
@@ -20,6 +20,12 @@ export default function FaqPage() {
     <>
       {/* 질문·답변을 그대로 알려주면 검색결과에 아코디언으로 펼쳐진다 */}
       <JsonLd data={faqSchema(FAQ_ITEMS)} />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: '홈', path: '/' },
+          { name: '자주 묻는 질문', path: '/faq' },
+        ])}
+      />
       <LandingHeader />
 
       <main className="mx-auto w-full max-w-3xl flex-1 break-keep px-6 py-16">

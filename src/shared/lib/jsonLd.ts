@@ -1,4 +1,4 @@
-import { SITE_NAME, SITE_URL, absoluteUrl } from './site';
+import { CONTACT_EMAIL, SITE_NAME, SITE_NAME_KO, SITE_URL, absoluteUrl } from './site';
 
 /** 검색엔진이 사이트 주인을 식별하는 정보. 로고와 이름이 검색결과에 함께 뜬다. */
 export function organizationSchema(): Record<string, unknown> {
@@ -6,18 +6,29 @@ export function organizationSchema(): Record<string, unknown> {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: SITE_NAME,
+    // "유니로드"로 검색해도 같은 곳으로 알아보게 한다
+    alternateName: SITE_NAME_KO,
     url: SITE_URL,
     logo: absoluteUrl('/logo-uniroad.png'),
     description:
       '파견 준비 일정, 제출 서류 체크리스트, 현지 중고거래와 동행 구하기까지. 교환학생에게 필요한 것만 모은 커뮤니티.',
+    email: CONTACT_EMAIL,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'customer support',
+      email: CONTACT_EMAIL,
+      availableLanguage: 'Korean',
+    },
   };
 }
 
+/** 검색결과 제목 위에 뜨는 사이트 이름. alternateName은 구글이 이름을 고를 때 후보로 쓴다 */
 export function websiteSchema(): Record<string, unknown> {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: SITE_NAME,
+    alternateName: SITE_NAME_KO,
     url: SITE_URL,
     inLanguage: 'ko-KR',
   };

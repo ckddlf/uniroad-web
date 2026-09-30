@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
 
 import { LEGAL_DOCUMENTS } from '@/entities/legal/documents';
+import { breadcrumbSchema } from '@/shared/lib/jsonLd';
 import { pageMetadata } from '@/shared/lib/site';
+import { JsonLd } from '@/shared/ui';
 import { LandingFooter } from '@/widgets/landing/LandingFooter';
 import { LandingHeader } from '@/widgets/landing/LandingHeader';
 
@@ -15,6 +17,12 @@ export const metadata: Metadata = pageMetadata({
 export default function TermsPage() {
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: '홈', path: '/' },
+          { name: '이용약관 · 개인정보처리방침', path: '/terms' },
+        ])}
+      />
       <LandingHeader />
 
       <main className="mx-auto flex max-w-3xl flex-col gap-12 px-6 py-16">

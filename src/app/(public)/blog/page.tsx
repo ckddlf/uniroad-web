@@ -5,8 +5,9 @@ import { BlogMorePosts } from '@/features/blog/ui/BlogMorePosts';
 import { endpoints } from '@/shared/api/endpoints';
 import { fetchPublic } from '@/shared/api/server';
 import type { BlogPostSummaryResponse, CursorPage } from '@/shared/api/types';
+import { breadcrumbSchema } from '@/shared/lib/jsonLd';
 import { pageMetadata } from '@/shared/lib/site';
-import { EmptyState } from '@/shared/ui';
+import { EmptyState, JsonLd } from '@/shared/ui';
 import { Logo } from '@/shared/ui/Logo';
 import { LandingFooter } from '@/widgets/landing/LandingFooter';
 import { LandingHeader } from '@/widgets/landing/LandingHeader';
@@ -35,6 +36,12 @@ export default async function BlogPage() {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: '홈', path: '/' },
+          { name: '블로그', path: '/blog' },
+        ])}
+      />
       <LandingHeader />
 
       <main className="break-keep bg-canvas">

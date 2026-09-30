@@ -17,6 +17,12 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? 'https://www.uniroa
 
 export const SITE_NAME = 'UNIROAD';
 
+/** 한글 표기. 블로그 작성자 이름으로도 쓰며, 검색엔진이 두 이름을 같은 곳으로 묶게 구조화 데이터에 싣는다 */
+export const SITE_NAME_KO = '유니로드';
+
+/** 문의 메일. 푸터와 구조화 데이터가 같은 값을 쓴다 */
+export const CONTACT_EMAIL = 'uniroad.official@gmail.com';
+
 /** sitemap처럼 문자열로 URL을 만들어야 하는 곳에서 쓴다 */
 export function absoluteUrl(path: string): string {
   return `${SITE_URL}${path.startsWith('/') ? path : `/${path}`}`;

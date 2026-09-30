@@ -7,7 +7,9 @@ import { endpoints } from '@/shared/api/endpoints';
 import { fetchPublic } from '@/shared/api/server';
 import type { NoticeResponse } from '@/shared/api/types';
 import { formatDate } from '@/shared/lib/date';
+import { breadcrumbSchema } from '@/shared/lib/jsonLd';
 import { OG_DEFAULTS, shareImages } from '@/shared/lib/site';
+import { JsonLd } from '@/shared/ui';
 import { LandingFooter } from '@/widgets/landing/LandingFooter';
 import { LandingHeader } from '@/widgets/landing/LandingHeader';
 
@@ -69,6 +71,13 @@ export default async function NoticeDetailPage({ params }: PageProps) {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: '홈', path: '/' },
+          { name: '공지사항', path: '/notices' },
+          { name: notice.title, path: `/notices/${notice.id}` },
+        ])}
+      />
       <LandingHeader />
 
       <main className="mx-auto w-full max-w-3xl flex-1 px-6 py-16">

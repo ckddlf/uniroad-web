@@ -1,3 +1,5 @@
+import { SITE_NAME_KO } from '@/shared/lib/site';
+
 /**
  * 블로그 글쓴이 표기.
  *
@@ -6,4 +8,4 @@
  * 개인 닉네임이 공개 페이지에 그대로 노출된다. 그래서 화면·검색 구조화 데이터 모두
  * 이 값 하나로 통일한다.
  */
-export const BLOG_AUTHOR = '유니로드';
+export const BLOG_AUTHOR = SITE_NAME_KO;

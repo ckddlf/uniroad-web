@@ -1,5 +1,6 @@
 import Link from 'next/link';
 
+import { CONTACT_EMAIL } from '@/shared/lib/site';
 import { Logo } from '@/shared/ui/Logo';
 
 export function LandingFooter() {
@@ -42,10 +43,10 @@ export function LandingFooter() {
               이용약관 · 개인정보처리방침
             </Link>
             <a
-              href="mailto:uniroad.official@gmail.com"
+              href={`mailto:${CONTACT_EMAIL}`}
               className="text-body text-ink-500 transition-colors hover:text-ink-900"
             >
-              문의: uniroad.official@gmail.com
+              문의: {CONTACT_EMAIL}
             </a>
           </nav>
         </div>
