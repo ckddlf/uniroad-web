@@ -25,13 +25,15 @@ export function BlogListCards({ posts }: BlogListCardsProps) {
 
   return (
     <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {posts.map((post) => {
+      {posts.map((post, index) => {
         const mine = likeStates.get(post.id);
         return (
           <BlogCard
             key={post.id}
             post={mine === undefined ? post : { ...post, ...mine }}
             href={`/blog/${post.slug}`}
+            // 데스크톱 첫 줄(3장)이 첫 화면에 걸린다. 모바일은 첫 장만 걸리지만 셋 다 먼저 받아도 작다
+            priority={index < 3}
           />
         );
       })}

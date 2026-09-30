@@ -76,3 +76,25 @@ export async function readImageSize(file: File, maxEdge = MAX_IMAGE_EDGE): Promi
     return null;
   }
 }
+
+/**
+ * next.config의 images.remotePatterns와 같은 조건.
+ * 여기서 true인 주소만 Next 이미지 최적화(/_next/image)에 넘길 수 있다 — 밖의 주소를 넘기면 400이 난다.
+ */
+export function isOptimizableImage(url: string | null | undefined): url is string {
+  if (!url) return false;
+  try {
+    const { protocol, hostname } = new URL(url);
+    return (protocol === 'https:' || protocol === 'http:') && hostname.endsWith('.amazonaws.com');
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * next/image 컴포넌트를 쓸 수 없는 곳(HTML 문자열)에서 최적화 주소를 직접 만든다.
+ * w는 next.config의 deviceSizes·imageSizes에 있는 값이어야 한다.
+ */
+export function optimizedImageUrl(src: string, width: number, quality = 75): string {
+  return `/_next/image?url=${encodeURIComponent(src)}&w=${width}&q=${quality}`;
+}

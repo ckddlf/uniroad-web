@@ -1,8 +1,10 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Heart } from 'lucide-react';
 
 import { cn } from '@/shared/lib/cn';
 import { formatDate } from '@/shared/lib/date';
+import { isOptimizableImage } from '@/shared/lib/image';
 
 import { BLOG_AUTHOR } from '../author';
 
@@ -25,16 +27,29 @@ export interface BlogCardProps {
   post: BlogCardData;
   /** 없으면 링크가 아니라 그냥 카드로 그린다 (미리보기) */
   href?: string;
+  /** 첫 화면에 보이는 카드면 켠다 — 사진을 lazy로 미루지 않고 먼저 받는다(LCP) */
+  priority?: boolean;
   className?: string;
 }
 
-export function BlogCard({ post, href, className }: BlogCardProps) {
+export function BlogCard({ post, href, priority = false, className }: BlogCardProps) {
   const date = post.publishedAt ?? post.createdAt ?? null;
 
   const body = (
     <>
       <div className="aspect-[16/10] w-full overflow-hidden bg-canvas">
-        {post.thumbnailUrl ? (
+        {isOptimizableImage(post.thumbnailUrl) ? (
+          // 원본(가로 1600px)을 그대로 받으면 목록 한 장에 사진만 1MB가 넘는다. 카드 폭에 맞춰 줄여 받는다
+          <Image
+            src={post.thumbnailUrl}
+            alt={post.title}
+            width={1600}
+            height={1000}
+            sizes="(min-width: 1024px) 368px, (min-width: 640px) 50vw, 100vw"
+            priority={priority}
+            className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+          />
+        ) : post.thumbnailUrl ? (
           /* eslint-disable-next-line @next/next/no-img-element -- 썸네일 주소가 remotePatterns 밖일 수 있어, next/image의 런타임 오류 대신 일반 img를 쓴다 */
           <img
             src={post.thumbnailUrl}

@@ -2,6 +2,7 @@ import { cn } from '@/shared/lib/cn';
 import { formatDate } from '@/shared/lib/date';
 
 import { BLOG_AUTHOR } from '../author';
+import { optimizeContentImages } from '../contentImages';
 
 export interface BlogArticleData {
   title: string;
@@ -50,7 +51,7 @@ export function BlogArticle({ post, actions, className }: BlogArticleProps) {
 
       <div
         className="blog-content mt-8"
-        dangerouslySetInnerHTML={{ __html: post.contentHtml }}
+        dangerouslySetInnerHTML={{ __html: optimizeContentImages(post.contentHtml) }}
       />
     </article>
   );

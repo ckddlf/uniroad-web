@@ -7,6 +7,10 @@ import type { NextConfig } from 'next';
  */
 const nextConfig: NextConfig = {
   images: {
+    // S3 사진은 Cache-Control 없이 내려와 최적화본이 기본값(60초)마다 만료된다. Vercel은 만료 뒤
+    // 다시 만드는 것도 변환 1회로 세므로 한도가 금방 찬다. 파일 이름에 UUID가 붙어 같은 주소의
+    // 내용이 바뀌지 않으니 길게 둔다(31일). 인증 서류 사진은 unoptimized라 여기에 해당하지 않는다.
+    minimumCacheTTL: 2678400,
     remotePatterns: [
       // TODO(api): 실제 S3 버킷 도메인 확인 후 좁힐 것
       { protocol: 'https', hostname: '**.amazonaws.com' },
