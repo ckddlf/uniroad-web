@@ -36,7 +36,9 @@ export const metadata: Metadata = {
       '파견 준비 일정, 제출 서류 체크리스트, 현지 중고거래와 동행 구하기까지 UNIROAD 하나로.',
     images: ['/logo-uniroad.png'],
   },
-  alternates: { canonical: '/' },
+  // canonical은 여기 두지 않는다. 루트에 두면 자기 canonical이 없는 모든 페이지가 그대로 물려받아
+  // "나는 홈의 복사본"이라고 선언하게 되고, 검색엔진이 그 페이지를 색인에서 뺄 수 있다.
+  // 공개 페이지는 각자 자기 주소를 canonical로 단다.
   // 구글 서치콘솔·네이버 서치어드바이저의 소유권 확인 태그. 지우면 두 도구에서 소유권이 풀린다.
   verification: {
     google: 'CkJS3CdfYF2C-RHfvusmunkRmovQtae-QitHtQ_MEH4',

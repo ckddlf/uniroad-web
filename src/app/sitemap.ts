@@ -49,8 +49,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: absoluteUrl('/faq'), changeFrequency: 'monthly', priority: 0.6 },
     { url: absoluteUrl('/notices'), changeFrequency: 'weekly', priority: 0.5 },
     { url: absoluteUrl('/terms'), changeFrequency: 'yearly', priority: 0.3 },
+    // 로그인은 싣지 않는다 — 검색으로 찾아 들어올 페이지가 아니다. 회원가입은 새로 오는 사람의 입구라 남긴다.
     { url: absoluteUrl('/signup'), changeFrequency: 'monthly', priority: 0.5 },
-    { url: absoluteUrl('/login'), changeFrequency: 'yearly', priority: 0.3 },
   ];
 
   // 색인에서 뺀 글을 sitemap에 남겨두면 서치콘솔이 모순이라고 경고한다

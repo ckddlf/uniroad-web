@@ -10,6 +10,7 @@ import { LandingHeader } from '@/widgets/landing/LandingHeader';
 export const metadata: Metadata = {
   title: '공지사항',
   description: 'UNIROAD 운영 공지와 업데이트 소식입니다.',
+  alternates: { canonical: '/notices' },
 };
 
 export default async function NoticesPage() {

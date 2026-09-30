@@ -8,6 +8,7 @@ import { AuthShell } from '@/widgets/auth/AuthShell';
 export const metadata: Metadata = {
   title: '회원가입',
   description: '아이디와 비밀번호만으로 UNIROAD를 시작하세요.',
+  alternates: { canonical: '/signup' },
 };
 
 export default function SignUpPage() {
