@@ -38,7 +38,8 @@ export function BlogCard({ post, href, className }: BlogCardProps) {
           /* eslint-disable-next-line @next/next/no-img-element -- 썸네일 주소가 remotePatterns 밖일 수 있어, next/image의 런타임 오류 대신 일반 img를 쓴다 */
           <img
             src={post.thumbnailUrl}
-            alt=""
+            /* 이미지 검색에서도 어떤 글의 사진인지 알아보도록 글 제목을 싣는다 */
+            alt={post.title}
             loading="lazy"
             /* 감싼 상자가 aspect-[16/10]으로 자리를 잡지만, 이미지 자체에도 비율을 알려야
                CSS가 오기 전이나 상자가 무너진 경우에 글이 밀리지 않는다(CLS) */

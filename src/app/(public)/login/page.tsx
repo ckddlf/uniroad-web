@@ -3,14 +3,16 @@ import type { Metadata } from 'next';
 
 import { GuestOnly } from '@/features/auth/ui/GuestOnly';
 import { LoginForm } from '@/features/auth/ui/LoginForm';
+import { pageMetadata } from '@/shared/lib/site';
 import { AuthShell } from '@/widgets/auth/AuthShell';
 import { Skeleton } from '@/shared/ui';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: '로그인',
-  description: 'UNIROAD에 로그인하고 교환학생 준비를 이어가세요.',
-  alternates: { canonical: '/login' },
-};
+  description:
+    'UNIROAD에 로그인하고 교환학생 준비 일정과 커뮤니티, 중고거래·티켓 양도·동행 게시판을 이어서 이용하세요.',
+  path: '/login',
+});
 
 export default function LoginPage() {
   return (

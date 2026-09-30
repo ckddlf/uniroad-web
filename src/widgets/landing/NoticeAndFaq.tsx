@@ -31,7 +31,8 @@ export async function NoticeAndFaq() {
               href="/notices"
               className="text-caption font-medium text-brand-600 transition-colors hover:text-brand-700"
             >
-              전체 보기
+              {/* 링크 글자가 "전체 보기"뿐이면 검색엔진·스크린리더가 어디로 가는 링크인지 알 수 없다 */}
+              <span className="sr-only">공지사항 </span>전체 보기
             </Link>
           </div>
 
@@ -63,7 +64,7 @@ export async function NoticeAndFaq() {
               href="/faq"
               className="text-caption font-medium text-brand-600 transition-colors hover:text-brand-700"
             >
-              전체 보기
+              <span className="sr-only">자주 묻는 질문 </span>전체 보기
             </Link>
           </div>
 

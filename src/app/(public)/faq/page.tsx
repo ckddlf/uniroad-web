@@ -2,16 +2,18 @@ import type { Metadata } from 'next';
 
 import { FAQ_ITEMS } from '@/entities/faq/items';
 import { faqSchema } from '@/shared/lib/jsonLd';
+import { pageMetadata } from '@/shared/lib/site';
 import { JsonLd } from '@/shared/ui';
 import { FaqList } from '@/widgets/landing/FaqList';
 import { LandingFooter } from '@/widgets/landing/LandingFooter';
 import { LandingHeader } from '@/widgets/landing/LandingHeader';
 
-export const metadata: Metadata = {
-  title: '자주 묻는 질문',
-  description: '가입·온보딩·인증·기능 이용에서 자주 나오는 질문을 모았습니다.',
-  alternates: { canonical: '/faq' },
-};
+export const metadata: Metadata = pageMetadata({
+  title: '자주 묻는 질문 — 가입·교환학생 인증·이용 안내',
+  description:
+    '교환학생 커뮤니티 UNIROAD의 가입과 온보딩, 교환학생 인증 서류와 심사 기간, 준비 일정 체크리스트, 중고거래·티켓 양도 이용 방법을 질문과 답으로 정리했습니다.',
+  path: '/faq',
+});
 
 export default function FaqPage() {
   return (

@@ -5,17 +5,18 @@ import { BlogMorePosts } from '@/features/blog/ui/BlogMorePosts';
 import { endpoints } from '@/shared/api/endpoints';
 import { fetchPublic } from '@/shared/api/server';
 import type { BlogPostSummaryResponse, CursorPage } from '@/shared/api/types';
+import { pageMetadata } from '@/shared/lib/site';
 import { EmptyState } from '@/shared/ui';
 import { Logo } from '@/shared/ui/Logo';
 import { LandingFooter } from '@/widgets/landing/LandingFooter';
 import { LandingHeader } from '@/widgets/landing/LandingHeader';
 
-export const metadata: Metadata = {
-  title: '블로그',
+export const metadata: Metadata = pageMetadata({
+  title: '교환학생 준비 블로그 — 장학금·비용·준비물 정리',
   description:
-    '교환학생 준비와 현지 생활에 대해 UNIROAD가 쓰는 글. 파견 준비, 거래, 동행에서 실제로 겪은 이야기를 남깁니다.',
-  alternates: { canonical: '/blog' },
-};
+    '교환학생 장학금과 비용, 준비물·짐싸기부터 비자, 항공권, 파견교 고르는 법까지. 지원에서 출국까지 필요한 정보를 UNIROAD가 정리합니다.',
+  path: '/blog',
+});
 
 const PAGE_SIZE = 9;
 
@@ -53,6 +54,8 @@ export default async function BlogPage() {
               <EmptyState title="아직 올라온 글이 없어요" description="첫 글을 준비하고 있어요." />
             ) : (
               <>
+                {/* 카드 제목이 h3라서, h1과 카드 사이에 h2가 없으면 제목 단계가 한 칸 건너뛴다 */}
+                <h2 className="sr-only">전체 글</h2>
                 <BlogListCards posts={posts} />
 
                 {nextCursor !== null && <BlogMorePosts initialCursor={nextCursor} size={PAGE_SIZE} />}

@@ -4,14 +4,16 @@ import { NoticeList } from '@/features/notice/ui/NoticeList';
 import { endpoints } from '@/shared/api/endpoints';
 import { fetchPublic } from '@/shared/api/server';
 import type { NoticeResponse } from '@/shared/api/types';
+import { pageMetadata } from '@/shared/lib/site';
 import { LandingFooter } from '@/widgets/landing/LandingFooter';
 import { LandingHeader } from '@/widgets/landing/LandingHeader';
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: '공지사항',
-  description: 'UNIROAD 운영 공지와 업데이트 소식입니다.',
-  alternates: { canonical: '/notices' },
-};
+  description:
+    '교환학생 커뮤니티 UNIROAD의 운영 공지사항입니다. 서비스 변경과 점검 일정, 새로 추가된 기능 소식을 이곳에서 가장 먼저 알려 드립니다.',
+  path: '/notices',
+});
 
 export default async function NoticesPage() {
   // TODO(api): 목록에 페이징이 없어 전체 배열이 온다. 화면에서 20개씩 나눠 보여준다.

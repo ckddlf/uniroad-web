@@ -15,9 +15,10 @@ import { TrustSection } from '@/widgets/landing/TrustSection';
 import { WhyUniroad } from '@/widgets/landing/WhyUniroad';
 
 export const metadata: Metadata = {
-  title: 'UNIROAD — 교환학생 준비부터 현지 생활까지',
+  // 제목에 이미 UNIROAD가 있으므로 루트의 "%s | UNIROAD" 틀을 씌우지 않는다
+  title: { absolute: 'UNIROAD — 교환학생 준비부터 현지 생활까지' },
   description:
-    '파견 준비 일정과 제출 서류 체크리스트, 현지 중고거래와 티켓 양도, 동행 구하기까지. 교환학생에게 필요한 것만 모은 커뮤니티입니다.',
+    '교환학생 준비 일정과 제출 서류 체크리스트, 장학금·비용 정보부터 현지 중고거래와 티켓 양도, 동행 구하기까지. 유럽 교환학생을 위한 커뮤니티 UNIROAD입니다.',
   alternates: { canonical: '/' },
 };
 

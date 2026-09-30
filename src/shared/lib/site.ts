@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 /**
  * 사이트의 공개 주소. canonical·OG 이미지·sitemap이 절대 URL을 만들 때 쓴다.
  *
@@ -57,4 +59,40 @@ export function shareImages(url: string | null | undefined): { images: ShareImag
     return { images: [DEFAULT_SHARE_IMAGE] };
   }
   return { images: [{ url, width: 1200, height: 630 }] };
+}
+
+/**
+ * 고정된 공개 페이지 하나의 검색·공유 정보를 한 번에 만든다.
+ *
+ * openGraph를 정의하지 않은 페이지는 루트의 것(홈의 제목·설명·주소)을 그대로 물려받아,
+ * 카카오톡·슬랙에 공유하면 어느 페이지든 홈처럼 보인다. 그래서 canonical과 함께 페이지마다 채운다.
+ */
+export function pageMetadata({
+  title,
+  description,
+  path,
+}: {
+  title: string;
+  description: string;
+  path: string;
+}): Metadata {
+  return {
+    title,
+    description,
+    alternates: { canonical: path },
+    openGraph: {
+      ...OG_DEFAULTS,
+      type: 'website',
+      title,
+      description,
+      url: path,
+      ...shareImages(null),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      ...shareImages(null),
+    },
+  };
 }
