@@ -37,6 +37,11 @@ export const metadata: Metadata = {
     images: ['/logo-uniroad.png'],
   },
   alternates: { canonical: '/' },
+  // 구글 서치콘솔·네이버 서치어드바이저의 소유권 확인 태그. 지우면 두 도구에서 소유권이 풀린다.
+  verification: {
+    google: 'CkJS3CdfYF2C-RHfvusmunkRmovQtae-QitHtQ_MEH4',
+    other: { 'naver-site-verification': '219f3a09e10fb87d4538cb7d95e11e6c341187d7' },
+  },
 };
 
 export const viewport: Viewport = {
