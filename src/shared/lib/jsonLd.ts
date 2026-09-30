@@ -62,7 +62,9 @@ export function articleSchema(post: ArticleSchemaInput): Record<string, unknown>
     dateModified: post.updatedAt,
     keywords: post.tags.length > 0 ? post.tags.join(', ') : undefined,
     inLanguage: 'ko-KR',
-    author: { '@type': post.authorName ? 'Person' : 'Organization', name: post.authorName ?? SITE_NAME },
+    // 글쓴이는 개인이 아니라 서비스다(features/blog/author.ts). Person으로 두면 리치 결과 테스트가
+    // 사람 프로필 주소(url)를 찾으며 경고하므로, 사이트 주인과 같은 단체로 밝히고 주소를 단다.
+    author: { '@type': 'Organization', name: post.authorName ?? SITE_NAME, url: SITE_URL },
     publisher: {
       '@type': 'Organization',
       name: SITE_NAME,
