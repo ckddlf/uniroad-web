@@ -6,6 +6,10 @@ import type { NextConfig } from 'next';
  * 백엔드 CORS 필터가 그 Origin을 보고 403으로 끊기 때문이다.
  */
 const nextConfig: NextConfig = {
+  // 동적 페이지((app) 그룹)의 메타데이터는 기본값이면 <head>가 닫힌 뒤 본문 쪽으로 흘려 보내진다.
+  // Googlebot은 이 방식 대상이라 noindex·canonical이 원본 HTML의 <head>에 없고, 스크립트를 돌려야 보인다.
+  // 이 앱은 메타데이터를 기다리며 데이터를 받는 곳이 SSG 페이지뿐이라 흘려 보낼 이득이 없으므로 끈다.
+  htmlLimitedBots: /.*/,
   images: {
     // S3 사진은 Cache-Control 없이 내려와 최적화본이 기본값(60초)마다 만료된다. Vercel은 만료 뒤
     // 다시 만드는 것도 변환 1회로 세므로 한도가 금방 찬다. 파일 이름에 UUID가 붙어 같은 주소의
