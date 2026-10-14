@@ -14,8 +14,10 @@ export function formatAmount(value: number | null | undefined, symbol?: string):
   const text = new Intl.NumberFormat('ko-KR', {
     minimumFractionDigits: digits,
     maximumFractionDigits: 2,
-  }).format(value);
-  return symbol ? `${symbol}${text}` : text;
+  }).format(Math.abs(value));
+  // 음수는 부호를 통화 기호 앞에 둔다 (-$50)
+  const sign = value < 0 ? '-' : '';
+  return `${sign}${symbol ?? ''}${text}`;
 }
 
 /** 정가 대비 할인율 — 계산할 수 없으면 null */

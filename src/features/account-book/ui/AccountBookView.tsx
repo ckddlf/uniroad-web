@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 
 import { currencySymbol } from '@/entities/account/currency';
 import { ACCOUNT_CATEGORY } from '@/shared/lib/constants';
+import { cn } from '@/shared/lib/cn';
 import { formatDate, toServerDate } from '@/shared/lib/date';
 import { formatAmount } from '@/shared/lib/format';
 import { useAuthStore } from '@/shared/store/authStore';
@@ -53,7 +54,12 @@ export function AccountBookView() {
           ) : balance.isError ? (
             <p className="mt-1 text-body text-ink-500">잔액을 불러오지 못했어요.</p>
           ) : (
-            <p className="mt-1 text-display text-ink-900">
+            <p
+              className={cn(
+                'mt-1 text-display',
+                balance.data.balance < 0 ? 'text-danger' : 'text-ink-900',
+              )}
+            >
               {formatAmount(balance.data.balance, currency)}
             </p>
           )}

@@ -4,6 +4,7 @@ import { Wallet } from 'lucide-react';
 
 import { currencySymbol } from '@/entities/account/currency';
 import { useBalance, useMonthlySummary } from '@/features/account-book/api';
+import { cn } from '@/shared/lib/cn';
 import { formatAmount } from '@/shared/lib/format';
 import { useAuthStore } from '@/shared/store/authStore';
 import { Skeleton } from '@/shared/ui';
@@ -32,7 +33,12 @@ export function AccountWidget() {
           ) : balance.isError ? (
             <p className="mt-1 text-body text-ink-500">-</p>
           ) : (
-            <p className="mt-1 text-h1 text-ink-900">
+            <p
+              className={cn(
+                'mt-1 text-h1',
+                balance.data.balance < 0 ? 'text-danger' : 'text-ink-900',
+              )}
+            >
               {formatAmount(balance.data.balance, currency)}
             </p>
           )}
