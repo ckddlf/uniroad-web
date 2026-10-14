@@ -8,14 +8,13 @@ import {
   CalendarDays,
   ChevronLeft,
   MapPin,
-  MessageCircle,
   MessageSquare,
   Siren,
   Users,
 } from 'lucide-react';
 
 import { useCreateChatRoom } from '@/features/chat/api';
-import { isKakaoOpenChatLink, participantRatio, tripLength } from '@/entities/companion/trip';
+import { participantRatio, tripLength } from '@/entities/companion/trip';
 import { isApiError, toErrorMessage } from '@/shared/api/errors';
 import { COMPANION_STATUS } from '@/shared/lib/constants';
 import { formatDate, formatDateTime } from '@/shared/lib/date';
@@ -54,7 +53,6 @@ export function CompanionDetailView({ postId }: { postId: number }) {
   const deletePost = useDeleteCompanion();
   const createRoom = useCreateChatRoom();
 
-  const [leaveOpen, setLeaveOpen] = useState(false);
   const [reportOpen, setReportOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
@@ -87,7 +85,6 @@ export function CompanionDetailView({ postId }: { postId: number }) {
   const data = post.data;
   const recruiting = data.status === 'RECRUITING';
   const days = tripLength(data.startDate, data.endDate);
-  const linkUsable = recruiting && isKakaoOpenChatLink(data.chatLink);
 
   const mine = myId !== undefined && data.memberId === myId;
   // 작성자 ID를 안 내려주는 구버전 서버에서는 채팅을 걸 상대를 특정할 수 없다
@@ -204,26 +201,10 @@ export function CompanionDetailView({ postId }: { postId: number }) {
           </VerifiedGate>
         )}
 
-        {recruiting ? (
-          <Button
-            size="lg"
-            variant="secondary"
-            disabled={!linkUsable}
-            onClick={() => setLeaveOpen(true)}
-            leftIcon={<MessageCircle aria-hidden className="size-4" />}
-          >
-            카카오톡 오픈채팅으로 참여하기
-          </Button>
-        ) : (
+        {!recruiting && (
           <div className="rounded-md bg-ink-100 px-4 py-3 text-center text-body text-ink-500">
             모집이 마감되었어요
           </div>
-        )}
-
-        {recruiting && !linkUsable && (
-          <p className="text-caption text-ink-500">
-            등록된 링크가 카카오톡 오픈채팅 주소가 아니어서 연결하지 않았어요.
-          </p>
         )}
 
         <div className="flex flex-wrap gap-2">
@@ -274,34 +255,6 @@ export function CompanionDetailView({ postId }: { postId: number }) {
           </div>
         </div>
       )}
-
-      <Modal
-        open={leaveOpen}
-        onClose={() => setLeaveOpen(false)}
-        title="외부 오픈채팅방으로 이동합니다"
-        size="sm"
-        footer={
-          <>
-            <Button variant="ghost" onClick={() => setLeaveOpen(false)}>
-              취소
-            </Button>
-            <a
-              href={data.chatLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={buttonClass()}
-              onClick={() => setLeaveOpen(false)}
-            >
-              이동하기
-            </a>
-          </>
-        }
-      >
-        <p className="text-body text-ink-700">
-          UNIROAD는 외부 채팅에서 발생한 문제에 책임지지 않습니다.
-        </p>
-        <p className="mt-2 text-body text-danger">선입금·송금을 요구하면 즉시 신고해주세요.</p>
-      </Modal>
 
       <ReportModal
         open={reportOpen}

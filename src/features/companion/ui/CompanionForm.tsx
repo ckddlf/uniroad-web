@@ -45,7 +45,6 @@ function toDefaults(initial?: CompanionPostResponse): CompanionFormValues {
     capacity: String(initial.capacity ?? 1),
     currentParticipants: String(initial.currentParticipants ?? 1),
     genderRatio: initial.genderRatio ?? '',
-    chatLink: initial.chatLink,
     status: initial.status,
   };
 }
@@ -100,7 +99,6 @@ export function CompanionForm({ postId, initial }: CompanionFormProps) {
           'region',
           'capacity',
           'currentParticipants',
-          'chatLink',
         ])
       ) {
         return;
@@ -193,16 +191,6 @@ export function CompanionForm({ postId, initial }: CompanionFormProps) {
         hint="선택 입력이에요."
         error={errors.genderRatio?.message}
         {...register('genderRatio')}
-      />
-
-      <Input
-        label="오픈채팅 링크"
-        required
-        type="url"
-        placeholder="https://open.kakao.com/..."
-        hint="카카오톡 오픈채팅방 링크를 넣어주세요. 참여 희망자가 이 링크로 연락합니다."
-        error={errors.chatLink?.message}
-        {...register('chatLink')}
       />
 
       {isEdit && (

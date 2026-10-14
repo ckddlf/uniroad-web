@@ -39,16 +39,6 @@ export const nicknameSchema = z
 
 export const emailSchema = z.string().email('이메일 형식이 올바르지 않습니다.');
 
-/** 동행 참여는 카카오 오픈채팅으로만 연결한다 */
-export const openChatLinkSchema = z
-  .string()
-  .min(1, '오픈채팅 링크를 입력해주세요.')
-  .url('링크 형식이 올바르지 않습니다.')
-  .refine(
-    (value) => value.startsWith('https://open.kakao.com/'),
-    '카카오톡 오픈채팅 링크(https://open.kakao.com/…)를 입력해주세요.',
-  );
-
 /** yyyy-MM-dd */
 export const serverDateSchema = z
   .string()

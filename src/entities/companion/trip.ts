@@ -20,8 +20,3 @@ export function participantRatio(post: CompanionPostResponse): number {
 export function isRecruiting(post: CompanionPostResponse): boolean {
   return post.status === 'RECRUITING';
 }
-
-/** 카카오 오픈채팅 링크만 외부 이동 버튼으로 연결한다 */
-export function isKakaoOpenChatLink(link: string | null | undefined): boolean {
-  return typeof link === 'string' && link.startsWith('https://open.kakao.com/');
-}

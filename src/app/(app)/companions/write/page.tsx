@@ -11,7 +11,7 @@ export default function CompanionWritePage() {
       <header>
         <h1 className="text-h1 text-ink-900">동행 등록</h1>
         <p className="mt-1 text-body text-ink-500">
-          참여 연락은 카카오톡 오픈채팅으로 이어집니다.
+          참여 연락은 작성자와의 채팅으로 이어집니다.
         </p>
       </header>
 

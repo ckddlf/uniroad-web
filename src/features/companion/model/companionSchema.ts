@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import type { CompanionPostRequest, CompanionStatus } from '@/shared/api/types';
-import { openChatLinkSchema, serverDateSchema } from '@/shared/lib/validation';
+import { serverDateSchema } from '@/shared/lib/validation';
 
 export const companionSchema = z
   .object({
@@ -23,7 +23,6 @@ export const companionSchema = z
       .min(1, '현재 인원을 입력해주세요.')
       .refine((value) => Number(value) >= 1, '본인을 포함해 1명 이상이어야 해요.'),
     genderRatio: z.string().max(20, '20자 이하로 입력해주세요.'),
-    chatLink: openChatLinkSchema,
     status: z.string(),
   })
   .superRefine((values, context) => {
@@ -57,7 +56,6 @@ export const COMPANION_DEFAULTS: CompanionFormValues = {
   // 작성자 본인을 기본 1명으로 잡는다
   currentParticipants: '1',
   genderRatio: '',
-  chatLink: '',
   status: 'RECRUITING',
 };
 
@@ -69,7 +67,6 @@ export function toCompanionRequest(values: CompanionFormValues): CompanionPostRe
     endDate: values.endDate,
     country: values.country,
     region: values.region.trim(),
-    chatLink: values.chatLink.trim(),
     status: values.status as CompanionStatus,
     capacity: Number(values.capacity),
     currentParticipants: Number(values.currentParticipants),

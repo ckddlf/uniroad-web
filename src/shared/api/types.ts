@@ -410,8 +410,6 @@ export interface CompanionPostRequest {
   endDate: string;
   country: string;
   region: string;
-  /** 카카오 오픈채팅 URL */
-  chatLink: string;
   status: CompanionStatus;
   capacity: number;
   currentParticipants: number;

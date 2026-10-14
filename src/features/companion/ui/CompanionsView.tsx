@@ -86,7 +86,7 @@ export function CompanionsView() {
         <div>
           <h1 className="text-h1 text-ink-900">동행 구하기</h1>
           <p className="mt-1 text-body text-ink-500">
-            일정이 맞는 사람과 함께 다녀보세요. 참여 연락은 카카오톡 오픈채팅으로 이어집니다.
+            일정이 맞는 사람과 함께 다녀보세요. 참여 연락은 작성자와의 채팅으로 이어집니다.
           </p>
         </div>
 
